@@ -7,7 +7,6 @@ import styles from './ContactForm.module.css';
 export default function ContactForm() {
   const [formData, setFormData] = useState({
     name: '',
-    email: '',
     subject: '',
     message: '',
   });
@@ -20,11 +19,13 @@ export default function ContactForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate API submission
-    setTimeout(() => {
-      setSubmitted(true);
-      setFormData({ name: '', email: '', subject: '', message: '' });
-    }, 800);
+
+    const message = `New Enquiry from Shahi Solutions website%0A%0A*Name:* ${formData.name}%0A*Subject:* ${formData.subject}%0A*Message:* ${formData.message}`;
+    const whatsappUrl = `https://wa.me/917356190621?text=${message}`;
+    window.open(whatsappUrl, '_blank');
+
+    setSubmitted(true);
+    setFormData({ name: '', subject: '', message: '' });
   };
 
   return (
@@ -90,20 +91,6 @@ export default function ContactForm() {
                 value={formData.name}
                 onChange={handleChange}
                 placeholder="John Doe"
-                className={styles.input}
-              />
-            </div>
-
-            <div className={styles.formGroup}>
-              <label htmlFor="email" className={styles.label}>Email Address</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                required
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="john@example.com"
                 className={styles.input}
               />
             </div>

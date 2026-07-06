@@ -15,7 +15,7 @@ export default function Projects({ isFeatured = false }: ProjectsProps) {
       description: "Developed a personalized online shopping platform for children's products featuring real-time product customization, live preview functionality, secure checkout, and a seamless shopping experience. The platform enables customers to personalize products and instantly visualize the final result before purchasing.",
       image: '/project-fetchkids.png',
       tags: ['React', 'Node.js', 'MongoDB', 'Payment Gateway'],
-      link: '#',
+      link: 'https://www.fetchkids.in/',
     },
     {
       title: 'VRS Real Invest',
@@ -23,15 +23,15 @@ export default function Projects({ isFeatured = false }: ProjectsProps) {
       description: 'Designed and developed a professional real estate website that showcases property investment opportunities, company services, and consultation options with a clean user experience focused on lead generation.',
       image: '/project-vrs.png',
       tags: ['React', 'Responsive Design', 'CMS', 'SEO'],
-      link: '#',
+      link: 'https://www.vrsrealinvest.com.au/',
     },
     {
       title: 'Mood By Teal',
-      category: 'Fashion / Lifestyle E-Commerce',
+      category: 'Interior Design & Decor Website',
       description: 'Built a modern fashion e-commerce website with an elegant interface, product catalog, shopping cart, secure checkout, and mobile-first design to deliver a premium shopping experience.',
       image: '/project-teal.png',
       tags: ['React', 'E-Commerce', 'UI/UX', 'Payment Integration'],
-      link: '#',
+      link: '#https://moodbyteal.com/',
     },
   ];
 
@@ -72,7 +72,7 @@ export default function Projects({ isFeatured = false }: ProjectsProps) {
                   ))}
                 </div>
                 
-                <a href={project.link} className={`btn btn-secondary ${styles.projectBtn}`}>
+                <a href={project.link} target="_blank" className={`btn btn-secondary ${styles.projectBtn}`}>
                   View Project <ArrowUpRight size={16} />
                 </a>
               </div>
