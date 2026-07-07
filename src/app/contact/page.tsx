@@ -18,7 +18,7 @@ export default function ContactPage() {
               Let's Build Your <span className="gradient-text">Next Digital Venture</span>
             </h1>
             <p className="section-subtitle" style={{ maxWidth: '640px', margin: '0 auto' }}>
-              Partner with Shahi Solutions to design, engineer, and deploy high-performance custom applications, websites, and business automations.
+              Partner with Drawcode to design, engineer, and deploy high-performance custom applications, websites, and business automations.
             </p>
           </div>
         </section>

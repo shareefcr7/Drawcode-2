@@ -2,6 +2,7 @@ import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import TrustedBy from '@/components/TrustedBy';
 import Services from '@/components/Services';
+import EasyCom from '@/components/EasyCom';
 import Technologies from '@/components/Technologies';
 import Testimonials from '@/components/Testimonials';
 import CTA from '@/components/CTA';
@@ -27,6 +28,11 @@ export default function Home() {
         {/* Core Services Section */}
         <div className="animate-on-scroll">
           <Services />
+        </div>
+
+        {/* EasyCom Section */}
+        <div className="animate-on-scroll">
+          <EasyCom />
         </div>
 
         {/* Technologies Grid */}

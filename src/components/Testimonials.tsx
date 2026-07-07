@@ -6,7 +6,7 @@ export default function Testimonials() {
     {
       name: 'Sarah Jenkins',
       role: 'CTO, FinCore Systems',
-      text: 'Shahi Solutions delivered our custom ledger engine in record time. The code quality, type safety, and security standards exceeded our stringent financial compliance requirements.',
+      text: 'Drawcode delivered our custom ledger engine in record time. The code quality, type safety, and security standards exceeded our stringent financial compliance requirements.',
       rating: 5,
       avatarInitials: 'SJ',
     },
@@ -33,7 +33,7 @@ export default function Testimonials() {
           <div className="badge">Testimonials</div>
           <h2 className="section-title">What Our Clients Say</h2>
           <p className="section-subtitle">
-            Read feedback from technology managers and business leaders who scaled operations with Shahi Solutions.
+            Read feedback from technology managers and business leaders who scaled operations with Drawcode.
           </p>
         </div>
 

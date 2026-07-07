@@ -13,7 +13,7 @@ export default function Footer() {
           <div className={styles.colInfo}>
             <Link href="/" className={styles.logo}>
               <span className={styles.logoDot}></span>
-              Shahi<span className={styles.logoAccent}>Solutions</span>
+              <span className={styles.logoAccent}>Drawcode</span>
             </Link>
             <p className={styles.description}>
               Accelerating business innovation with custom software, enterprise platforms, and scalable digital solutions.
@@ -85,7 +85,7 @@ export default function Footer() {
               </li>
               <li>
                 <Phone size={16} className={styles.contactIcon} />
-                <a href="tel:+917356190621">+91 73561 90621 (Call / WhatsApp)</a>
+                <a href="tel:+918139800591">+91 81398 00591 (Call / WhatsApp)</a>
               </li>
               <li>
                 <MapPin size={16} className={styles.contactIcon} />
@@ -98,7 +98,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className={styles.bottomBar}>
           <p className={styles.copyright}>
-            &copy; {currentYear} Shahi Solutions. All rights reserved.
+            &copy; {currentYear} Drawcode. All rights reserved.
           </p>
           <div className={styles.bottomLinks}>
             <a href="#">Privacy Policy</a>

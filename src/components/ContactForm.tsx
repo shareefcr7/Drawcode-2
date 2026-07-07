@@ -20,8 +20,8 @@ export default function ContactForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const message = `New Enquiry from Shahi Solutions website%0A%0A*Name:* ${formData.name}%0A*Subject:* ${formData.subject}%0A*Message:* ${formData.message}`;
-    const whatsappUrl = `https://wa.me/917356190621?text=${message}`;
+    const message = `New Enquiry from Drawcode website%0A%0A*Name:* ${formData.name}%0A*Subject:* ${formData.subject}%0A*Message:* ${formData.message}`;
+    const whatsappUrl = `https://wa.me/918139800591?text=${message}`;
     window.open(whatsappUrl, '_blank');
 
     setSubmitted(true);
@@ -52,7 +52,7 @@ export default function ContactForm() {
             </div>
             <div>
               <span className={styles.itemLabel}>Phone & WhatsApp</span>
-              <a href="tel:+917356190621" className={styles.itemVal}>73561 90621 (Call/Chat)</a>
+              <a href="tel:+918139800591" className={styles.itemVal}>81398 00591 (Call/Chat)</a>
             </div>
           </li>
           <li className={styles.contactItem}>
@@ -73,7 +73,7 @@ export default function ContactForm() {
             <CheckCircle size={48} className={styles.successIcon} />
             <h4 className={styles.successTitle}>Message Sent!</h4>
             <p className={styles.successDesc}>
-              Thank you for contacting Shahi Solutions. Our technical consultants will review your scope and follow up within 24 hours.
+              Thank you for contacting Drawcode. Our technical consultants will review your scope and follow up within 24 hours.
             </p>
             <button className="btn btn-primary" onClick={() => setSubmitted(false)}>
               Send Another Message

@@ -20,7 +20,7 @@ export default function AboutPage() {
               We Engineer the Tools that <span className="gradient-text">Streamline Operations</span>
             </h1>
             <p className="section-subtitle" style={{ maxWidth: '640px', margin: '0 auto' }}>
-              Shahi Solutions is a dedicated technical consulting and software engineering firm. We design tailored web, mobile, and cloud ecosystems built to scale.
+              Drawcode is a dedicated technical consulting and software engineering firm. We design tailored web, mobile, and cloud ecosystems built to scale.
             </p>
           </div>
         </section>

@@ -52,7 +52,7 @@ export default function Header() {
       <div className={`container ${styles.navContainer}`}>
         <Link href="/" className={styles.logo}>
           <span className={styles.logoDot}></span>
-          Shahi<span className={styles.logoAccent}>Solutions</span>
+          <span className={styles.logoAccent}>Drawcode</span>
         </Link>
 
         {/* Desktop Nav */}

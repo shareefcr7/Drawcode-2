@@ -26,12 +26,12 @@ export default function Projects({ isFeatured = false }: ProjectsProps) {
       link: 'https://www.vrsrealinvest.com.au/',
     },
     {
-      title: 'Mood By Teal',
+      title: 'Moodbyteal',
       category: 'Interior Design & Decor Website',
-      description: 'Built a modern fashion e-commerce website with an elegant interface, product catalog, shopping cart, secure checkout, and mobile-first design to deliver a premium shopping experience.',
+      description: 'Designed and developed an elegant interior design and decor website that showcases curated collections, mood boards, and styling services with a refined, mobile-first experience crafted to inspire and convert visitors into clients.',
       image: '/project-teal.png',
-      tags: ['React', 'E-Commerce', 'UI/UX', 'Payment Integration'],
-      link: '#https://moodbyteal.com/',
+      tags: ['React', 'Interior Design', 'UI/UX', 'Responsive Design'],
+      link: 'https://moodbyteal.com/',
     },
   ];
 
