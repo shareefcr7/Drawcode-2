@@ -29,9 +29,9 @@ export default function Projects({ isFeatured = false }: ProjectsProps) {
       title: 'Moodbyteal',
       category: 'Interior Design & Decor Website',
       description: 'Designed and developed an elegant interior design and decor website that showcases curated collections, mood boards, and styling services with a refined, mobile-first experience crafted to inspire and convert visitors into clients.',
-      image: '/project-teal-v3.png',
+      image: '/project-teal-v2.png',
       tags: ['React', 'Interior Design', 'UI/UX', 'Responsive Design'],
-      link: 'https://moodbyteal.com/',
+      link: 'https://moodbyteal.com/', 
     },
     {
       title: 'HEEDY',
