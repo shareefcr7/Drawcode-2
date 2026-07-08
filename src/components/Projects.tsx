@@ -29,9 +29,17 @@ export default function Projects({ isFeatured = false }: ProjectsProps) {
       title: 'Moodbyteal',
       category: 'Interior Design & Decor Website',
       description: 'Designed and developed an elegant interior design and decor website that showcases curated collections, mood boards, and styling services with a refined, mobile-first experience crafted to inspire and convert visitors into clients.',
-      image: '/project-teal.png',
+      image: '/project-teal-v2.png',
       tags: ['React', 'Interior Design', 'UI/UX', 'Responsive Design'],
       link: 'https://moodbyteal.com/',
+    },
+    {
+      title: 'HEEDY',
+      category: 'E-Commerce / Skincare & Beauty',
+      description: 'Designed and developed a premium skincare e-commerce store featuring curated skin, lip, and body care collections, science-backed product storytelling, secure checkout, and a refined, mobile-first shopping experience crafted to build trust and drive conversions.',
+      image: '/project-heedy-v2.jpg',
+      tags: ['React', 'E-Commerce', 'UI/UX', 'Responsive Design'],
+      link: 'https://heedy.shop/',
     },
   ];
 

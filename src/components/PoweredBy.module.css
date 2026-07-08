@@ -1,0 +1,114 @@
+.poweredSection {
+  background-color: var(--bg-light-alt);
+  padding: 120px 0;
+  border-bottom: 1px solid var(--glass-border-dark);
+  position: relative;
+  z-index: 10;
+}
+
+.poweredGrid {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+@media (max-width: 1024px) {
+  .poweredGrid {
+    grid-template-columns: 1fr;
+    gap: 50px;
+  }
+}
+
+.infoCol {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.description {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--text-dark);
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.subtext {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-dark-muted);
+  margin-bottom: 35px;
+}
+
+.partnerBtn {
+  font-size: 0.95rem;
+  padding: 12px 28px;
+}
+
+.gridCol {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 640px) {
+  .gridCol {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+.synergyCard {
+  padding: 30px 24px;
+  border-radius: 16px;
+  background-color: var(--bg-navy-card);
+  border: 1px solid var(--glass-border-dark);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.synergyCard:hover {
+  transform: translateY(-5px);
+  border-color: rgba(100, 116, 139, 0.2);
+  box-shadow: var(--shadow-lg), var(--shadow-accent-glow);
+}
+
+[data-theme="dark"] .synergyCard:hover {
+  background-color: rgba(255, 255, 255, 0.02);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.iconWrapper {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--bg-social);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--glass-border-light);
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cardTitle {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.cardDescription {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--text-dark-muted);
+}

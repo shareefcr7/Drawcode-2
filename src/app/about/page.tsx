@@ -4,6 +4,7 @@ import Process from '@/components/Process';
 import CTA from '@/components/CTA';
 import Footer from '@/components/Footer';
 import ScrollReveal from '@/components/ScrollReveal';
+import PoweredBy from '@/components/PoweredBy';
 
 export default function AboutPage() {
   return (
@@ -24,6 +25,11 @@ export default function AboutPage() {
             </p>
           </div>
         </section>
+
+        {/* Powered By Parent Company Section */}
+        <div className="animate-on-scroll">
+          <PoweredBy />
+        </div>
 
         {/* Why Choose Section */}
         <div className="animate-on-scroll">
