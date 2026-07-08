@@ -4,25 +4,25 @@ import styles from './Testimonials.module.css';
 export default function Testimonials() {
   const testimonials = [
     {
-      name: 'Sarah Jenkins',
-      role: 'CTO, FinCore Systems',
+      name: 'Hrithik Jayakrishnan',
+      role: 'Kochi, India',
       text: 'Drawcode delivered our custom ledger engine in record time. The code quality, type safety, and security standards exceeded our stringent financial compliance requirements.',
       rating: 5,
-      avatarInitials: 'SJ',
+      avatarInitials: 'HJ',
     },
     {
-      name: 'David Chen',
-      role: 'Founder, RetailFlow',
+      name: 'Salman Khalid',
+      role: 'Qatar',
       text: 'Their web development team is top-tier. Our luxury storefront load speed dropped from 4.2s to 0.8s, leading directly to a 24% increase in our checkouts and conversion rates.',
       rating: 5,
-      avatarInitials: 'DC',
+      avatarInitials: 'SK',
     },
     {
-      name: 'Amanda Ross',
-      role: 'Operations Director, LogiCorp',
+      name: 'Vishal Rajashekaran',
+      role: 'Australia',
       text: 'The business automation tools they designed save our tracking department over 30 hours of manual Excel spreadsheets every week. Absolute game changer for our logistics flow.',
       rating: 5,
-      avatarInitials: 'AR',
+      avatarInitials: 'VR',
     },
   ];
 

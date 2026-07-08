@@ -29,7 +29,7 @@ export default function Projects({ isFeatured = false }: ProjectsProps) {
       title: 'Moodbyteal',
       category: 'Interior Design & Decor Website',
       description: 'Designed and developed an elegant interior design and decor website that showcases curated collections, mood boards, and styling services with a refined, mobile-first experience crafted to inspire and convert visitors into clients.',
-      image: '/project-teal-v2.png',
+      image: '/project-teal-v3.png',
       tags: ['React', 'Interior Design', 'UI/UX', 'Responsive Design'],
       link: 'https://moodbyteal.com/',
     },
@@ -40,6 +40,14 @@ export default function Projects({ isFeatured = false }: ProjectsProps) {
       image: '/project-heedy-v2.jpg',
       tags: ['React', 'E-Commerce', 'UI/UX', 'Responsive Design'],
       link: 'https://heedy.shop/',
+    },
+    {
+      title: 'Dinorah',
+      category: 'Apparel Manufacturing & Export',
+      description: 'Designed and developed a premium boutique-grade garment manufacturing and apparel export website featuring high-end stitching collections, private-label specifications, interactive legacy timelines, and seamless client onboarding channels.',
+      image: '/project-dinorah-v2.png',
+      tags: ['React', 'Apparel Sourcing', 'Boutique UI', 'Responsive Design'],
+      link: 'https://dinorh.com/',
     },
   ];
 
