@@ -1,4 +1,4 @@
-import { ExternalLink, ShieldCheck, Zap, Cloud, Cpu } from 'lucide-react';
+import { ExternalLink, Layers, CreditCard, ShoppingCart, Briefcase } from 'lucide-react';
 import styles from './PoweredBy.module.css';
 
 export default function PoweredBy() {
@@ -28,41 +28,41 @@ export default function PoweredBy() {
           <div className={styles.gridCol}>
             <div className={styles.synergyCard}>
               <div className={styles.iconWrapper} style={{ color: '#38bdf8' }}>
-                <Cloud size={24} />
+                <Layers size={24} />
               </div>
               <div className={styles.cardContent}>
-                <h3 className={styles.cardTitle}>Enterprise Cloud</h3>
-                <p className={styles.cardDescription}>Backed by robust, secure, and auto-scaling multi-cloud architectures built for high-demand environments.</p>
+                <h3 className={styles.cardTitle}>ERP Systems</h3>
+                <p className={styles.cardDescription}>Custom enterprise resource software designed to automate workflows, manage assets, and unify operational data.</p>
               </div>
             </div>
 
             <div className={styles.synergyCard}>
               <div className={styles.iconWrapper} style={{ color: '#a855f7' }}>
-                <Cpu size={24} />
+                <CreditCard size={24} />
               </div>
               <div className={styles.cardContent}>
-                <h3 className={styles.cardTitle}>AI & Automation</h3>
-                <p className={styles.cardDescription}>Integrating next-generation AI pipelines, workflows, and automation scripts to optimize team efficiency.</p>
+                <h3 className={styles.cardTitle}>Point of Sale (POS)</h3>
+                <p className={styles.cardDescription}>High-performance transaction architectures, secure custom payment gateways, and real-time inventory tools.</p>
               </div>
             </div>
 
             <div className={styles.synergyCard}>
               <div className={styles.iconWrapper} style={{ color: '#22c55e' }}>
-                <ShieldCheck size={24} />
+                <ShoppingCart size={24} />
               </div>
               <div className={styles.cardContent}>
-                <h3 className={styles.cardTitle}>Rigorous Security</h3>
-                <p className={styles.cardDescription}>Enforcing high-standard data encryption, security audits, and strict compliance layers on all builds.</p>
+                <h3 className={styles.cardTitle}>E-Commerce</h3>
+                <p className={styles.cardDescription}>Conversion-optimized digital stores featuring custom product engines, fluid checkouts, and premium UX layouts.</p>
               </div>
             </div>
 
             <div className={styles.synergyCard}>
               <div className={styles.iconWrapper} style={{ color: '#eab308' }}>
-                <Zap size={24} />
+                <Briefcase size={24} />
               </div>
               <div className={styles.cardContent}>
-                <h3 className={styles.cardTitle}>Agile & Efficient</h3>
-                <p className={styles.cardDescription}>Fast, sprint-based cycles delivering features continuously without sacrificing quality or performance.</p>
+                <h3 className={styles.cardTitle}>Portfolios & Corporate</h3>
+                <p className={styles.cardDescription}>Stunning, responsive, and SEO-optimized web experiences crafted to present services and engage audiences.</p>
               </div>
             </div>
           </div>
