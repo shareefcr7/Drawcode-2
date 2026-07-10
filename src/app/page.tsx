@@ -1,6 +1,5 @@
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
-import TrustedBy from '@/components/TrustedBy';
 import Services from '@/components/Services';
 import EasyCom from '@/components/EasyCom';
 import Technologies from '@/components/Technologies';
@@ -21,9 +20,6 @@ export default function Home() {
       <main>
         {/* Hero Section */}
         <Hero />
-
-        {/* Trusted By Client Logos */}
-        <TrustedBy />
 
         {/* Core Services Section */}
         <div className="animate-on-scroll">

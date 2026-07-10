@@ -34,20 +34,28 @@ export default function Projects({ isFeatured = false }: ProjectsProps) {
       link: 'https://moodbyteal.com/', 
     },
     {
-      title: 'HEEDY',
-      category: 'E-Commerce / Skincare & Beauty',
-      description: 'Designed and developed a premium skincare e-commerce store featuring curated skin, lip, and body care collections, science-backed product storytelling, secure checkout, and a refined, mobile-first shopping experience crafted to build trust and drive conversions.',
-      image: '/project-heedy-v2.jpg',
-      tags: ['React', 'E-Commerce', 'UI/UX', 'Responsive Design'],
-      link: 'https://heedy.shop/',
-    },
-    {
       title: 'Dinorah',
       category: 'Apparel Manufacturing & Export',
       description: 'Designed and developed a premium boutique-grade garment manufacturing and apparel export website featuring high-end stitching collections, private-label specifications, interactive legacy timelines, and seamless client onboarding channels.',
       image: '/project-dinorah-v2.png',
       tags: ['React', 'Apparel Sourcing', 'Boutique UI', 'Responsive Design'],
       link: 'https://dinorh.com/',
+    },
+    {
+      title: 'Fleet Management',
+      category: 'Logistics & Vehicle Tracking System',
+      description: 'Built a fleet management solution for tracking vehicles, drivers, trips, and maintenance schedules in real time. Includes live GPS tracking, fuel and expense monitoring, automated maintenance alerts, and analytics to optimize fleet efficiency and reduce operational costs.',
+      image: '/project-fleet.png',
+      tags: ['React', 'Node.js', 'Real-Time GPS', 'Analytics'],
+      link: '#',
+    },
+    {
+      title: 'Auditorium Booking System',
+      category: 'Venue Management & Booking Platform',
+      description: 'Developed an auditorium booking and management system for scheduling events, managing venues, and handling reservations. Features a real-time dashboard with booking analytics, utilization insights, payment tracking, calendar-based scheduling, and automated status updates for confirmed, pending, and cancelled bookings.',
+      image: '/projects-auditorium.png',
+      tags: ['React', 'Node.js', 'Dashboard', 'Payments'],
+      link: '#',
     },
   ];
 

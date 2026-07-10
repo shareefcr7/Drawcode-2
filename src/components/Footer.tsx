@@ -81,7 +81,7 @@ export default function Footer() {
             <ul className={styles.contactList}>
               <li>
                 <Mail size={16} className={styles.contactIcon} />
-                <a href="mailto:request.sdec@gmail.com">request.sdec@gmail.com</a>
+                <a href="mailto:drawcodetechnologies@gmail.com">drawcodetechnologies@gmail.com</a>
               </li>
               <li>
                 <Phone size={16} className={styles.contactIcon} />
@@ -101,9 +101,8 @@ export default function Footer() {
             &copy; {currentYear} Drawcode. All rights reserved.
           </p>
           <div className={styles.bottomLinks}>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
-            <a href="#">Sitemap</a>
+            <Link href="/privacy-policy">Privacy Policy</Link>
+            <Link href="/terms">Terms &amp; Conditions</Link>
           </div>
         </div>
       </div>

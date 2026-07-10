@@ -19,7 +19,14 @@ export default function CTA() {
             Partner with Drawcode to design, engineer, and deploy high-performance custom applications, websites, and business automations tailored to your scale.
           </p>
           <div className={styles.ctaActions}>
-            <a href="mailto:request.sdec@gmail.com" className="btn btn-accent">
+            <a
+              href={`https://wa.me/918139800591?text=${encodeURIComponent(
+                "Hi Drawcode, I'd like to build my next project. Can we discuss?"
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-accent"
+            >
               Let's Build Your Next Project <ArrowRight size={18} />
             </a>
           </div>

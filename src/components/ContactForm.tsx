@@ -43,7 +43,7 @@ export default function ContactForm() {
             </div>
             <div>
               <span className={styles.itemLabel}>Email Us</span>
-              <a href="mailto:request.sdec@gmail.com" className={styles.itemVal}>request.sdec@gmail.com</a>
+              <a href="mailto:drawcodetechnologies@gmail.com" className={styles.itemVal}>drawcodetechnologies@gmail.com</a>
             </div>
           </li>
           <li className={styles.contactItem}>
