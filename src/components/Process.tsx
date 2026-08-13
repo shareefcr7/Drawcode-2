@@ -1,4 +1,5 @@
 import { Search, PenTool, Terminal, CheckCircle2 } from 'lucide-react';
+import GridCanvas from './GridCanvas';
 import styles from './Process.module.css';
 
 export default function Process() {
@@ -35,6 +36,8 @@ export default function Process() {
 
   return (
     <section className={styles.processSection} id="process">
+      <GridCanvas />
+
       <div className="container">
         <div className={styles.sectionHeader}>
           <div className="badge">Our Process</div>

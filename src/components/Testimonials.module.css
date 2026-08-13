@@ -1,113 +1,146 @@
 .testimonialsSection {
-  background-color: var(--bg-light-alt);
-  padding: 120px 0;
-  border-bottom: 1px solid var(--glass-border-dark);
   position: relative;
+  background-color: var(--bg-light-alt); /* zinc-50 */
+  padding: var(--section-y) 0;
+  border-bottom: 1px solid var(--line);
   z-index: 10;
+  overflow: clip;
+}
+
+/* ---------- shared grid canvas ---------- */
+.canvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(228, 228, 231, 0.4) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(228, 228, 231, 0.4) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 46%, #000 30%, transparent 82%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 46%, #000 30%, transparent 82%);
 }
 
 .sectionHeader {
+  position: relative;
+  z-index: 2;
   text-align: center;
   max-width: 800px;
-  margin: 0 auto 64px auto;
+  margin: 0 auto clamp(30px, 4vw, 54px);
 }
 
-.testimonialsGrid {
+/* ---------- three-card grid ---------- */
+.grid {
+  position: relative;
+  z-index: 2;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 24px);
+  align-items: stretch;
 }
 
-.testimonialCard {
-  background-color: var(--bg-navy-card);
-  border-radius: 16px;
-  padding: 38px 32px;
-  border: 1px solid var(--glass-border-dark);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  box-shadow: var(--shadow-sm);
+.card {
   display: flex;
   flex-direction: column;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  justify-content: space-between;
+  padding: 32px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(228, 228, 231, 0.8); /* zinc-200/80 */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-sm);
+  /* framer owns the lift; CSS answers with border + shadow only */
+  transition: border-color 0.3s ease-out, box-shadow 0.3s ease-out;
 }
 
-.testimonialCard:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
-  border-color: rgba(255, 255, 255, 0.2);
+.card:hover {
+  border-color: #d4d4d8; /* zinc-300 — the shadow carries the emphasis */
+  box-shadow: 0 8px 16px rgba(24, 24, 27, 0.03), 0 32px 56px -24px rgba(24, 24, 27, 0.12);
 }
 
+/* ---------- rating ---------- */
 .ratingRow {
   display: flex;
   gap: 4px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
+  color: #18181b; /* charcoal, never gold */
 }
 
-.testimonialText {
-  font-size: 1rem;
-  line-height: 1.65;
-  color: var(--text-dark-muted);
-  font-style: italic;
-  margin-bottom: 28px;
-  flex-grow: 1;
+/* ---------- quote ----------
+   deliberately not bold: it should read as someone's paragraph, not a pull-quote */
+.text {
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.625;
+  letter-spacing: 0;
+  color: #3f3f46; /* zinc-700 */
+  margin-bottom: 24px;
+  text-wrap: pretty;
 }
 
-.clientProfile {
+/* real typographic quotes, not characters in the copy */
+.text::before { content: '\201C'; }
+.text::after { content: '\201D'; }
+
+/* ---------- profile ---------- */
+.profile {
   display: flex;
   align-items: center;
-  gap: 16px;
-  border-top: 1px solid var(--glass-border-dark);
+  gap: 12px;
+  margin-top: auto;
   padding-top: 20px;
+  border-top: 1px solid var(--line);
 }
 
 .avatar {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--color-accent-start) 0%, var(--color-primary) 100%);
-  color: #000000;
-  font-weight: 800;
-  font-size: 0.9rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+  width: 40px;
+  height: 40px;
   flex-shrink: 0;
-  letter-spacing: 0.05em;
+  border-radius: 50%;
+  background: #18181b;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  /* ring-2 ring-zinc-200 — separates the badge from the card surface */
+  box-shadow: 0 0 0 2px #e4e4e7;
 }
 
-.clientInfo {
+.info {
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
-.clientName {
-  font-family: var(--font-heading);
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--text-light);
-  margin-bottom: 2px;
+.name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #18181b;
 }
 
-.clientRole {
-  font-size: 0.82rem;
-  color: var(--text-dark-muted);
-  font-weight: 500;
+.role {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: #a1a1aa; /* zinc-400 */
 }
 
-@media (max-width: 992px) {
-  .testimonialsGrid {
+/* ---------- responsive ---------- */
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .grid {
     grid-template-columns: 1fr;
-    max-width: 540px;
-    margin: 0 auto;
-    gap: 24px;
   }
-  
-  .testimonialCard {
-    padding: 30px 24px;
-  }
-  
-  .testimonialsSection {
-    padding: 90px 0;
+
+  .card {
+    padding: 26px;
   }
 }

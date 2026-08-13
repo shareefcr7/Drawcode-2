@@ -4,18 +4,18 @@
   left: 0;
   right: 0;
   z-index: 1000;
-  padding: 24px 0;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  border-bottom: 1px solid transparent;
+  padding: 16px 0;
+  /* permanent sticky glass — #F8FAFC at 80% behind an 18px blur */
+  background-color: color-mix(in srgb, var(--surface-sunken) 80%, transparent);
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  border-bottom: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
+  transition: padding 0.4s var(--ease-out), box-shadow 0.3s ease;
 }
 
 .scrolled {
-  padding: 14px 0;
-  background-color: var(--glass-bg-dark);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--glass-border-dark);
-  box-shadow: var(--shadow-lg);
+  padding: 10px 0;
+  box-shadow: var(--shadow-md);
 }
 
 .navContainer {
@@ -27,29 +27,18 @@
 .logo {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-family: var(--font-heading);
-  font-size: 1.45rem;
-  font-weight: 800;
-  color: var(--text-light);
-  letter-spacing: -0.03em;
   text-decoration: none;
 }
 
-.logoDot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--color-accent-start) 0%, var(--color-accent-end) 100%);
-  box-shadow: 0 0 10px rgba(6, 182, 212, 0.6);
+/* fixed height, width follows the mark's aspect ratio */
+.logoImg {
+  height: 36px;
+  width: auto;
+  transition: opacity 0.3s ease;
 }
 
-.logoAccent {
-  color: var(--color-primary);
-  background: linear-gradient(135deg, var(--color-accent-start) 0%, var(--color-primary) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.logo:hover .logoImg {
+  opacity: 0.75;
 }
 
 .desktopNav {
@@ -59,10 +48,11 @@
 }
 
 .navLink {
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   font-weight: 500;
-  color: var(--text-light-muted);
-  transition: all 0.2s ease;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  transition: color 0.3s ease;
   text-decoration: none;
   position: relative;
   padding: 4px 0;
@@ -71,26 +61,32 @@
 .navLink::after {
   content: '';
   position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0%;
+  bottom: -2px;
+  left: 50%;
+  width: 0;
   height: 2px;
-  background: linear-gradient(90deg, var(--color-accent-start), var(--color-primary));
-  transition: width 0.3s ease;
-  border-radius: 2px;
+  background: var(--accent);
+  border-radius: 999px;
+  transform: translateX(-50%);
+  transition: width 0.4s var(--ease-out), opacity 0.3s ease;
+  opacity: 0.5;
 }
 
 .navLink:hover::after {
-  width: 100%;
+  width: 18px;
+}
+
+.navLink:hover {
+  color: var(--accent);
 }
 
 .navLink.active {
-  color: var(--text-light);
+  color: var(--accent);
 }
 
 .navLink.active::after {
-  width: 100%;
-  background: linear-gradient(90deg, var(--color-accent-start), #ffffff);
+  width: 18px;
+  opacity: 1;
 }
 
 .rightAction {
@@ -116,7 +112,7 @@
 }
 
 .menuBtn:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--bg-social);
 }
 
 .mobileNav {
@@ -125,7 +121,7 @@
   left: 0;
   right: 0;
   background-color: var(--bg-navy);
-  border-bottom: 1px solid var(--glass-border-dark);
+  border-bottom: 1px solid var(--line);
   padding: 24px;
   animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   box-shadow: var(--shadow-xl);
@@ -142,7 +138,7 @@
   font-weight: 500;
   color: var(--text-light-muted);
   padding: 8px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid var(--line);
   text-decoration: none;
   transition: color 0.2s ease;
 }
@@ -154,7 +150,7 @@
 .mobileNavLink.active {
   color: var(--text-light);
   font-weight: 700;
-  border-left: 3px solid #ffffff;
+  border-left: 2px solid var(--accent);
   padding-left: 12px;
 }
 
@@ -192,26 +188,5 @@
   .menuBtn {
     display: block;
   }
-}
-
-.themeToggleBtn {
-  background: transparent;
-  border: 1px solid var(--glass-border-dark);
-  color: var(--text-light);
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  outline: none;
-}
-
-.themeToggleBtn:hover {
-  background-color: var(--bg-social);
-  border-color: rgba(100, 116, 139, 0.3);
-  transform: rotate(15deg) scale(1.05);
 }
 

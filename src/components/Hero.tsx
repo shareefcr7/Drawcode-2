@@ -1,40 +1,69 @@
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
-import TechAnimation from './TechAnimation';
+import NetworkHub from './NetworkHub';
+import GridCanvas from './GridCanvas';
 import styles from './Hero.module.css';
+
+const CAPABILITIES = [
+  'Web',
+  'Mobile',
+  'Software',
+  'UI/UX',
+  'ERP & CRM',
+  'Automation',
+  'Cloud',
+  'Growth',
+];
 
 export default function Hero() {
   return (
-    <section className={`dark-section ${styles.heroSection}`} id="hero">
-      {/* Decorative Glow Elements */}
-      <div className={`glow-effect ${styles.glowLeft}`}></div>
-      <div className={`glow-effect ${styles.glowRight}`}></div>
+    <section className={`dark-section ${styles.hero}`} id="hero">
+      {/* shared grid + beams + pointer light, same component the pricing uses */}
+      <GridCanvas />
+      <div className={`glow-effect ${styles.glowA}`} />
+      <div className={`glow-effect ${styles.glowB}`} />
 
-      <div className={`container ${styles.heroGrid}`}>
-        <div className={styles.heroContent}>
-          <div className="badge">
-            <span>Next-Gen Enterprise Solutions</span>
+      <div className={`container ${styles.inner}`}>
+        <div className={styles.grid}>
+          <div className={styles.content}>
+            <p className={`eyebrow ${styles.eyebrow}`}>Digital Engineering Studio</p>
+
+            <h1 className={styles.title}>
+              <span className={styles.line}>Building digital</span>
+              <span className={styles.line}>systems that move</span>
+              <span className={styles.line}>
+                businesses <span className="gradient-text">forward.</span>
+              </span>
+            </h1>
+
+            <p className={styles.description}>
+              Drawcode designs, builds, connects and automates the software a business
+              actually runs on — websites, products, ERP &amp; CRM platforms and the
+              workflows between them.
+            </p>
+
+            <div className={styles.actions}>
+              <Link href="/contact" className="btn btn-accent">
+                Start a project <ArrowRight size={18} />
+              </Link>
+              <Link href="/projects" className="btn btn-secondary">
+                View our work
+              </Link>
+            </div>
           </div>
-          <h1 className={styles.heroTitle}>
-            Empowering Businesses with <span className="gradient-text">Smart Digital Solutions</span>
-          </h1>
-          <p className={styles.heroDescription}>
-            We design, develop, and deliver state-of-the-art web products, custom software, ERP integrations, and mobile applications that drive business agility and exponential growth.
-          </p>
-          <div className={styles.heroActions}>
-            <Link href="/contact" className="btn btn-accent">
-              Get Started <ArrowRight size={18} />
-            </Link>
-            <Link href="/projects" className="btn btn-secondary">
-              View Our Projects
-            </Link>
+
+          <div className={styles.visual}>
+            <NetworkHub />
           </div>
         </div>
 
-        <div className={styles.heroVisual}>
-          <div className={styles.animationWrapper}>
-            <TechAnimation />
-          </div>
+        {/* Supporting rail — the capability set the ecosystem above is made of */}
+        <div className={styles.rail}>
+          <ul className={styles.capabilities}>
+            {CAPABILITIES.map((c) => (
+              <li key={c}>{c}</li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>

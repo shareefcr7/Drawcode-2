@@ -1,9 +1,16 @@
 .processSection {
   background-color: var(--bg-light-alt);
   padding: 120px 0;
-  border-bottom: 1px solid #f1f5f9;
+  border-bottom: 1px solid var(--line);
   position: relative;
   z-index: 10;
+  overflow: clip;
+}
+
+/* header + timeline ride above the grid canvas */
+.processSection > :global(.container) {
+  position: relative;
+  z-index: 2;
 }
 
 .sectionHeader {
@@ -54,7 +61,7 @@
   height: 64px;
   border-radius: 50%;
   background-color: var(--bg-light);
-  border: 3px solid #cbd5e1;
+  border: 3px solid var(--line-strong);
   color: var(--text-dark-muted);
   display: flex;
   align-items: center;
@@ -70,11 +77,14 @@
   right: -8px;
   font-size: 0.72rem;
   font-weight: 800;
-  background: linear-gradient(135deg, var(--color-primary) 0%, #1d4ed8 100%);
+  background: linear-gradient(135deg, var(--color-primary) 0%, #3f3f46 100%);
   color: var(--text-light);
   width: 22px;
   height: 22px;
   border-radius: 50%;
+  /* an active pipeline: each node pulses a ring, offset step by step so the
+     glow travels 1 -> 4 in time with the background beams */
+  animation: nodePulse 2.4s ease-in-out infinite;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -87,7 +97,7 @@
   color: var(--color-primary);
   box-shadow: var(--shadow-glow);
   transform: scale(1.1);
-  background-color: #ffffff;
+  background-color: var(--surface);
 }
 
 .stepContent {
@@ -179,5 +189,22 @@
   
   .nodeWrapper {
     margin-bottom: 8px;
+  }
+}
+
+
+@keyframes nodePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(24, 24, 27, 0.3); }
+  55% { box-shadow: 0 0 0 7px rgba(24, 24, 27, 0); }
+}
+
+.stepItem:nth-child(1) .stepBadge { animation-delay: 0s; }
+.stepItem:nth-child(2) .stepBadge { animation-delay: 0.6s; }
+.stepItem:nth-child(3) .stepBadge { animation-delay: 1.2s; }
+.stepItem:nth-child(4) .stepBadge { animation-delay: 1.8s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .stepBadge {
+    animation: none;
   }
 }

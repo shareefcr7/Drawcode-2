@@ -1,0 +1,57 @@
+.stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  /* the canvas is transparent — it sits on the hero, not in a box */
+  touch-action: pan-y;
+  /* fadeIn animates `scale`, the float animates `translate` — separate transform
+     properties, so the two run together instead of overwriting each other */
+  animation:
+    fadeIn 1.4s var(--ease-out) 300ms both,
+    coreFloat 4s ease-in-out 1.7s infinite alternate;
+}
+
+/* the whole core drifts ±4px — slow enough to read as breathing, not bobbing */
+@keyframes coreFloat {
+  from { translate: 0 -4px; }
+  to { translate: 0 4px; }
+}
+
+/* soft blue bloom behind the system so it reads as lit, not pasted on */
+.wash {
+  position: absolute;
+  inset: 8% 6% 4%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 58%,
+    rgba(37, 99, 235, 0.11),
+    rgba(37, 99, 235, 0.04) 45%,
+    transparent 68%
+  );
+  filter: blur(24px);
+  pointer-events: none;
+}
+
+.stage canvas {
+  display: block;
+  /* pointer parallax needs the events; the page still scrolls over it */
+  touch-action: pan-y;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; scale: 0.96; }
+  to { opacity: 1; scale: 1; }
+}
+
+@media (max-width: 1100px) {
+  .stage {
+    max-height: 62vh;
+    margin-inline: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage {
+    animation: none;
+  }
+}

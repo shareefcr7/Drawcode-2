@@ -1,133 +1,116 @@
-.servicesSection {
-  background-color: var(--bg-light-alt);
-  padding: 120px 0;
-  border-bottom: 1px solid var(--glass-border-dark);
+.section {
+  background-color: var(--bg-light);
+  padding: var(--section-y) 0;
+  border-bottom: 1px solid var(--line);
   position: relative;
   z-index: 10;
+  overflow: clip;
 }
 
 .sectionHeader {
   text-align: center;
   max-width: 800px;
-  margin: 0 auto 64px auto;
+  margin: 0 auto clamp(30px, 4vw, 54px);
 }
 
-.servicesGrid {
+.grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 30px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(14px, 1.6vw, 22px);
+  align-items: stretch;
 }
 
-.serviceCard {
-  background-color: var(--bg-navy-card);
-  border-radius: 16px;
-  padding: 36px 30px;
-  border: 1px solid var(--glass-border-dark);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  box-shadow: var(--shadow-sm);
-  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+.card {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  padding: 24px;
+  border-radius: 16px;
+  background: #ffffff;
+  border: 1px solid rgba(228, 228, 231, 0.8); /* zinc-200/80 */
+  box-shadow: var(--shadow-sm);
+  /* framer drives translate; CSS only handles the surface response to hover */
+  transition: border-color 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
 }
 
-.serviceCard:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
-  border-color: rgba(255, 255, 255, 0.2);
+/* soft charcoal lift — no colour wash, the shadow does the work */
+.card:hover {
+  border-color: #a1a1aa; /* zinc-400 */
+  box-shadow: 0 2px 4px rgba(24, 24, 27, 0.04), 0 20px 40px -20px rgba(24, 24, 27, 0.2);
 }
 
-.iconContainer {
-  width: 52px;
-  height: 52px;
-  border-radius: 12px;
-  display: flex;
+.icon {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(255, 255, 255, 0.04);
-  color: var(--text-light);
-  margin-bottom: 24px;
-  border: 1px solid var(--glass-border-dark);
-  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 44px;
+  height: 44px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  background: #f4f4f5; /* zinc-100 */
+  color: #18181b;      /* zinc-900 */
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
-.serviceCard:hover .iconContainer {
-  background: linear-gradient(135deg, var(--color-accent-start) 0%, var(--color-primary) 100%);
-  color: #000000;
-  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
-  border-color: transparent;
-  transform: scale(1.05);
+/* the badge inverts on hover — the card's one moment of contrast */
+.card:hover .icon {
+  background: #18181b;
+  color: #ffffff;
 }
 
-.serviceIcon {
-  width: 24px;
-  height: 24px;
-}
-
-.cardTitle {
+.title {
   font-family: var(--font-heading);
-  font-size: 1.22rem;
-  font-weight: 700;
-  line-height: 1.3;
-  margin-bottom: 12px;
-  color: var(--text-light);
-}
-
-.cardDescription {
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: var(--text-dark-muted);
-  margin-bottom: 24px;
-  flex-grow: 1;
-}
-
-.cardLink {
-  font-size: 0.9rem;
+  /* H3: text-xl -> md:text-2xl, semibold, tracking-tight */
+  font-size: clamp(1.25rem, 1.6vw, 1.5rem);
   font-weight: 600;
-  color: var(--text-light);
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+  color: var(--ink);
+  margin-bottom: 10px;
+  text-wrap: balance;
+}
+
+.body {
+  /* text-xs -> md:text-sm, zinc-500, leading-relaxed */
+  font-size: clamp(0.75rem, 0.9vw, 0.875rem);
+  line-height: 1.625;
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+
+/* pinned to the bottom so the row of links stays level across uneven cards */
+.explore {
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  margin-top: auto;
+  padding-top: 18px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink-3);
   text-decoration: none;
-  transition: opacity 0.2s ease;
+  transition: color 0.3s ease;
 }
 
-.cardLink:hover {
-  opacity: 0.8;
+.card:hover .explore {
+  color: var(--ink);
 }
 
 .arrow {
-  transition: transform 0.25s ease;
+  transition: transform 0.3s var(--ease-out);
 }
 
-.cardLink:hover .arrow {
-  transform: translateX(5px);
+.card:hover .arrow {
+  transform: translateX(6px);
 }
 
-@media (max-width: 1200px) {
-  .servicesGrid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+@media (max-width: 1080px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-@media (max-width: 992px) {
-  .servicesGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
-  .servicesSection {
-    padding: 90px 0;
-  }
-}
-
-@media (max-width: 576px) {
-  .servicesGrid {
+@media (max-width: 560px) {
+  .grid {
     grid-template-columns: 1fr;
-  }
-  
-  .serviceCard {
-    padding: 30px 24px;
   }
 }

@@ -4,6 +4,13 @@
   border-bottom: 1px solid var(--glass-border-dark);
   position: relative;
   z-index: 10;
+  overflow: clip;
+}
+
+/* every direct child of the container rides above the grid canvas */
+.poweredSection > :global(.container) {
+  position: relative;
+  z-index: 2;
 }
 
 /* First Row: Centered Header details */
@@ -76,13 +83,8 @@
 
 .synergyCard:hover {
   transform: translateY(-8px);
-  border-color: rgba(37, 99, 235, 0.35);
-  box-shadow: 0 20px 40px var(--color-card-shadow), 0 0 20px rgba(37, 99, 235, 0.08);
-}
-
-[data-theme="dark"] .synergyCard:hover {
-  background-color: rgba(255, 255, 255, 0.02);
-  border-color: rgba(255, 255, 255, 0.22);
+  border-color: rgba(24, 24, 27, 0.25);
+  box-shadow: 0 20px 40px var(--color-card-shadow), 0 0 20px rgba(24, 24, 27, 0.06);
 }
 
 .cardImageWrapper {

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Mail, Phone, MapPin } from 'lucide-react';
 import styles from './Footer.module.css';
 
@@ -7,13 +8,22 @@ export default function Footer() {
 
   return (
     <footer className={styles.footer}>
+      {/* oversized wordmark, deliberately clipped by the viewport edges */}
+      <span className={styles.watermark} aria-hidden="true">DRAWCODE</span>
+
       <div className="container">
-        <div className={styles.footerGrid}>
+        {/* minimal reveal only — reuses the site-wide observer, no extra JS */}
+        <div className={`${styles.footerGrid} animate-on-scroll`}>
           {/* Company Info */}
           <div className={styles.colInfo}>
-            <Link href="/" className={styles.logo}>
-              <span className={styles.logoDot}></span>
-              <span className={styles.logoAccent}>Drawcode</span>
+            <Link href="/" className={styles.logo} aria-label="Drawcode Technologies — home">
+              <Image
+                src="/logo.png"
+                alt="Drawcode Technologies"
+                width={1541}
+                height={301}
+                className={styles.logoImg}
+              />
             </Link>
             <p className={styles.description}>
               Accelerating business innovation with custom software, enterprise platforms, and scalable digital solutions.
@@ -74,12 +84,12 @@ export default function Footer() {
           <div className={styles.colLinks}>
             <h4 className={styles.colTitle}>Company</h4>
             <ul className={styles.linksList}>
-              <li><a href="#hero">About Us</a></li>
-              <li><a href="#why-us">Why Choose Us</a></li>
-              <li><a href="#projects">Our Projects</a></li>
-              <li><a href="#process">Build Process</a></li>
+              <li><Link href="/about">About Us</Link></li>
+              <li><Link href="/projects">Our Projects</Link></li>
+              <li><a href="#easycom">EasyCom Plans</a></li>
               <li><a href="#technologies">Tech Stack</a></li>
               <li><a href="#testimonials">Testimonials</a></li>
+              <li><Link href="/contact">Contact Us</Link></li>
             </ul>
           </div>
 

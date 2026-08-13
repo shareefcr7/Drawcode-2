@@ -4,7 +4,41 @@
   border-top: 1px solid var(--glass-border-dark);
   position: relative;
   z-index: 10;
+  /* clip, not hidden — keeps sticky descendants elsewhere unaffected */
+  overflow: clip;
   transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Huge background wordmark, deliberately half-cropped: it sits low enough that
+   only the top of the letterforms clears the footer's bottom edge. The offset is
+   in `em` rather than px so the crop stays at the halfway mark as the 12vw type
+   grows or shrinks with the viewport. The footer's `overflow: clip` does the
+   cutting, so nothing here can add a scrollbar. */
+.watermark {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.42em;
+  width: 100%;
+  font-family: var(--font-heading);
+  font-size: 13vw;
+  font-weight: 900;
+  letter-spacing: -0.06em;
+  line-height: 1;
+  text-transform: uppercase;
+  text-align: center;
+  white-space: nowrap;
+  /* clearly legible as a wordmark, still light enough to read as background */
+  color: rgba(24, 24, 27, 0.1);
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+/* keep real content above the watermark */
+.footer > :global(.container) {
+  position: relative;
+  z-index: 1;
 }
 
 .footerGrid {
@@ -21,31 +55,20 @@
 }
 
 .logo {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 10px;
-  font-family: var(--font-heading);
-  font-size: 1.4rem;
-  font-weight: 800;
-  color: var(--text-light);
-  letter-spacing: -0.03em;
   text-decoration: none;
   margin-bottom: 20px;
 }
 
-.logoDot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+.logoImg {
+  height: 40px;
+  width: auto;
+  transition: opacity 0.3s ease;
 }
 
-.logoAccent {
-  color: var(--color-primary);
-  background: linear-gradient(135deg, var(--color-accent-start) 0%, var(--color-primary) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.logo:hover .logoImg {
+  opacity: 0.75;
 }
 
 .description {
@@ -76,11 +99,11 @@
 }
 
 .socialLink:hover {
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  background: linear-gradient(135deg, #3f3f46 0%, #18181b 100%);
   color: #ffffff;
   border-color: transparent;
   transform: translateY(-3px);
-  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);
+  box-shadow: 0 4px 10px rgba(24, 24, 27, 0.18);
 }
 
 .colLinks {
@@ -133,7 +156,7 @@
 }
 
 .contactIcon {
-  color: #3b82f6; /* Keep brand blue color for logo consistency */
+  color: var(--ink);
   flex-shrink: 0;
   margin-top: 2px;
 }

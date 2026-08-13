@@ -2,43 +2,22 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Menu, X, ArrowRight, Sun, Moon } from 'lucide-react';
+import { Menu, X, ArrowRight } from 'lucide-react';
 import styles from './Header.module.css';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
-  const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
-    setMounted(true);
-    const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
-    
-    // Load persisted theme
-    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
-    const initialTheme = savedTheme || 'light';
-    setTheme(initialTheme);
-    document.documentElement.setAttribute('data-theme', initialTheme);
+    const handleScroll = () => setScrolled(window.scrollY > 20);
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  const toggleTheme = () => {
-    const nextTheme = theme === 'dark' ? 'light' : 'dark';
-    setTheme(nextTheme);
-    document.documentElement.setAttribute('data-theme', nextTheme);
-    localStorage.setItem('theme', nextTheme);
-  };
 
   const navLinks = [
     { name: 'Home', href: '/' },
@@ -50,9 +29,15 @@ export default function Header() {
   return (
     <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
       <div className={`container ${styles.navContainer}`}>
-        <Link href="/" className={styles.logo}>
-          <span className={styles.logoDot}></span>
-          <span className={styles.logoAccent}>Drawcode</span>
+        <Link href="/" className={styles.logo} aria-label="Drawcode Technologies — home">
+          <Image
+            src="/logo.png"
+            alt="Drawcode Technologies"
+            width={1541}
+            height={301}
+            priority
+            className={styles.logoImg}
+          />
         </Link>
 
         {/* Desktop Nav */}
@@ -72,15 +57,6 @@ export default function Header() {
         </nav>
 
         <div className={styles.rightAction}>
-          {/* Theme Toggle Button */}
-          <button 
-            className={styles.themeToggleBtn} 
-            onClick={toggleTheme}
-            aria-label="Toggle visual theme"
-          >
-            {mounted && theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
-          </button>
-
           <Link href="/contact" className={`btn btn-primary ${styles.ctaBtn}`}>
             Get Started <ArrowRight size={16} />
           </Link>

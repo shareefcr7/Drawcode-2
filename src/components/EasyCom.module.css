@@ -1,181 +1,266 @@
 .easyComSection {
-  background-color: var(--bg-navy);
-  padding: 100px 0;
-  border-bottom: 1px solid var(--glass-border-dark);
   position: relative;
-  overflow: hidden;
+  padding: var(--section-y) 0;
+  background-color: var(--bg-light);
+  border-bottom: 1px solid var(--line);
+  overflow: clip;
+  z-index: 10;
 }
 
-.glowLeft {
-  top: 10%;
-  left: -15%;
-  width: 50vw;
-  height: 50vw;
-  background-color: rgba(6, 182, 212, 0.04);
-}
-
-.glowRight {
-  bottom: 10%;
-  right: -15%;
-  width: 50vw;
-  height: 50vw;
-  background-color: rgba(147, 51, 234, 0.03);
-}
-
+/* ---------- header ---------- */
 .sectionHeader {
+  position: relative;
+  z-index: 2;
   text-align: center;
   max-width: 800px;
-  margin: 0 auto 48px auto;
-  position: relative;
-  z-index: 10;
+  margin: 0 auto clamp(34px, 4vw, 56px);
 }
 
-.badgeIcon {
-  color: var(--color-accent-start);
-  animation: pulse-glow 2s infinite ease-in-out;
-}
-
+/* ---------- cards ---------- */
 .plansContainer {
+  position: relative;
+  z-index: 2;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 30px;
-  max-width: 900px;
+  gap: clamp(20px, 2.4vw, 30px);
+  max-width: 940px;
   margin: 0 auto;
-  position: relative;
-  z-index: 10;
+  align-items: stretch;
 }
 
 .planCard {
-  background-color: var(--bg-navy-card);
-  border: 1px solid var(--glass-border-dark);
-  border-radius: 20px;
-  padding: 40px;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: var(--shadow-lg);
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
+  padding: 32px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(228, 228, 231, 0.8); /* zinc-200/80 */
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 4px 10px rgba(24, 24, 27, 0.03), 0 24px 48px -24px rgba(24, 24, 27, 0.1);
+  /* framer owns the lift; CSS only answers with border + shadow */
+  transition: border-color 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
 }
 
 .planCard:hover {
-  transform: translateY(-8px);
-  border-color: rgba(255, 255, 255, 0.15);
-  box-shadow: var(--shadow-xl), 0 10px 30px rgba(0, 0, 0, 0.2);
+  border-color: #a1a1aa; /* zinc-400 */
+  box-shadow: 0 6px 14px rgba(24, 24, 27, 0.04), 0 34px 60px -28px rgba(24, 24, 27, 0.2);
 }
 
-/* Premium Highlighted Border for Advanced Plan */
-.premiumCard {
-  border: 1px solid rgba(147, 51, 234, 0.2);
-  box-shadow: var(--shadow-lg), 0 0 20px rgba(147, 51, 234, 0.02);
+/* the featured plan sits inside a soft monochrome ring */
+.featured {
+  box-shadow:
+    0 0 0 2px rgba(24, 24, 27, 0.1),
+    0 6px 14px rgba(24, 24, 27, 0.04),
+    0 34px 60px -28px rgba(24, 24, 27, 0.16);
 }
 
-.premiumCard:hover {
-  border-color: rgba(147, 51, 234, 0.4);
-  box-shadow: var(--shadow-xl), 0 12px 35px rgba(147, 51, 234, 0.06);
+.featured:hover {
+  box-shadow:
+    0 0 0 2px rgba(24, 24, 27, 0.18),
+    0 8px 18px rgba(24, 24, 27, 0.05),
+    0 40px 70px -30px rgba(24, 24, 27, 0.24);
+}
+
+.recommended {
+  position: absolute;
+  top: 0;
+  right: 28px;
+  translate: 0 -50%;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: #18181b;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  box-shadow: 0 4px 10px -2px rgba(24, 24, 27, 0.35);
 }
 
 .planBadge {
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
   padding: 4px 12px;
-  border-radius: 9999px;
-  background-color: rgba(6, 182, 212, 0.08);
-  color: #06b6d4;
-  margin-bottom: 20px;
-  border: 1px solid rgba(6, 182, 212, 0.12);
-}
-
-.premiumBadge {
-  background-color: rgba(147, 51, 234, 0.08);
-  color: #a855f7;
-  border: 1px solid rgba(147, 51, 234, 0.12);
+  border-radius: 999px;
+  background: #f4f4f5;          /* zinc-100 */
+  border: 1px solid #e4e4e7;    /* zinc-200 */
+  color: #3f3f46;               /* zinc-700 */
+  font-size: clamp(10px, 0.9vw, 0.75rem);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 18px;
 }
 
 .planTitle {
   font-family: var(--font-heading);
-  font-size: 1.6rem;
-  font-weight: 800;
-  color: var(--text-light);
-  margin-bottom: 8px;
-  letter-spacing: -0.02em;
+  /* H3: text-xl -> md:text-2xl, semibold, tracking-tight */
+  font-size: clamp(1.25rem, 1.6vw, 1.5rem);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  margin-bottom: 6px;
 }
 
 .planPrice {
-  font-family: var(--font-heading);
-  font-size: 3rem;
-  font-weight: 900;
-  color: var(--text-light);
-  margin-bottom: 16px;
   display: flex;
   align-items: flex-start;
-  line-height: 1;
+  font-family: var(--font-heading);
+  font-size: 2.25rem;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: #18181b;
+  margin-bottom: 14px;
 }
 
 .currency {
-  font-size: 1.6rem;
-  font-weight: 600;
-  margin-top: 4px;
   margin-right: 2px;
-  color: var(--text-light-muted);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--ink-2);
+  translate: 0 0.2em;
 }
 
 .planDescription {
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: var(--text-dark-muted);
-  margin-bottom: 24px;
-  min-height: 72px;
+  /* text-xs -> md:text-sm, zinc-500, leading-relaxed */
+  font-size: clamp(0.75rem, 0.9vw, 0.875rem);
+  line-height: 1.625;
+  color: var(--ink-2);
+  margin-bottom: 22px;
 }
 
-.deliveryInfo {
+/* ---------- checklist ---------- */
+.features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.features li {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 0.95rem;
+  font-size: clamp(0.75rem, 0.9vw, 0.875rem);
+  font-weight: 400;
+  line-height: 1.625;
+  color: var(--ink-2);
+}
+
+.checkDot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  padding: 4px;
+  border-radius: 50%;
+  background: #f4f4f5;
+  color: #18181b;
+}
+
+/* ---------- delivery status pill ---------- */
+.deliveryInfo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 26px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: #fafafa;
+  border: 1px solid #e4e4e7;
+  font-size: 0.82rem;
   font-weight: 600;
-  color: var(--text-light);
-  margin-bottom: 30px;
-  padding: 12px 16px;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid var(--glass-border-dark);
-  border-radius: 12px;
-  width: 100%;
+  color: #3f3f46;
 }
 
-.deliveryIcon {
-  color: #06b6d4;
+/* live dot with a ring pulsing out of it */
+.liveDot {
+  position: relative;
+  display: inline-flex;
+  width: 8px;
+  height: 8px;
+  flex: none;
+  border-radius: 50%;
+  background: #10b981; /* emerald-500 */
 }
 
-.deliveryIconAccent {
-  color: #a855f7;
+.liveDot i {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #34d399; /* emerald-400 */
+  animation: livePing 2s ease-out infinite;
 }
 
+@keyframes livePing {
+  from { transform: scale(1); opacity: 0.5; }
+  to { transform: scale(2.4); opacity: 0; }
+}
+
+.boltIcon {
+  flex: none;
+  color: #18181b;
+  animation: boltFlash 2.6s ease-in-out infinite;
+}
+
+@keyframes boltFlash {
+  0%, 70%, 100% { opacity: 1; transform: none; }
+  78% { opacity: 0.35; transform: scale(1.12); }
+  86% { opacity: 1; transform: scale(1.05); }
+}
+
+/* ---------- action ---------- */
 .planBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   width: 100%;
-  padding: 14px 28px;
-  font-size: 0.95rem;
   margin-top: auto;
+  padding: 16px 28px;
+  border-radius: 999px;
+  background: #18181b;
+  color: #ffffff;
+  font-size: 0.94rem;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 8px 20px -6px rgba(24, 24, 27, 0.28);
+  transition: background-color 0.3s ease, box-shadow 0.3s var(--ease-out);
 }
 
-/* Responsiveness */
+.planBtn:hover {
+  background: #27272a;
+  box-shadow: 0 12px 26px -8px rgba(24, 24, 27, 0.38);
+}
+
+.planBtn svg {
+  transition: transform 0.3s var(--ease-out);
+}
+
+.planBtn:hover svg {
+  transform: translateX(4px);
+}
+
 @media (max-width: 768px) {
   .plansContainer {
     grid-template-columns: 1fr;
-    gap: 30px;
-    max-width: 450px;
+    max-width: 460px;
   }
 
   .planCard {
-    padding: 30px;
+    padding: 26px;
   }
+}
 
-  .easyComSection {
-    padding: 80px 0;
+@media (prefers-reduced-motion: reduce) {
+  .liveDot i,
+  .boltIcon {
+    animation: none;
   }
 }

@@ -1,126 +1,140 @@
 .techSection {
-  background-color: var(--bg-navy);
-  padding: 120px 0;
-  border-bottom: 1px solid var(--glass-border-dark);
+  background-color: var(--surface-alt);
+  padding: var(--section-y) 0;
+  border-bottom: 1px solid var(--line);
   position: relative;
-  overflow: hidden;
   z-index: 10;
-}
-
-.glowLeft {
-  bottom: -15%;
-  left: 5%;
-  width: 40vw;
-  height: 40vw;
-  background-color: rgba(6, 182, 212, 0.12);
 }
 
 .sectionHeader {
   text-align: center;
   max-width: 800px;
-  margin: 0 auto 64px auto;
+  margin: 0 auto clamp(28px, 4vw, 52px);
 }
 
-.techGrid {
+.sectionHeader :global(.section-title) {
+  color: var(--ink);
+  margin-bottom: 16px;
+}
+
+.sectionHeader :global(.section-subtitle) {
+  color: var(--ink-2);
+}
+
+/* ---------- Grid — 2 columns × 4 rows ---------- */
+.grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(14px, 1.6vw, 20px);
+  max-width: 880px;
+  margin: 0 auto;
 }
 
-.techCard {
-  background-color: var(--bg-navy-card);
-  border: 1px solid var(--glass-border-dark);
-  padding: 30px;
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  gap: 22px;
-  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+.card {
+  /* per-card brand colour, written inline by the component */
+  --brand: #71717a;
+
   position: relative;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  cursor: default;
-}
-
-.techCard:hover {
-  border-color: var(--hover-color);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3), 0 0 20px var(--hover-color);
-  transform: translateY(-5px);
-}
-
-/* Specific adjustment when hover color is pure white to soften glow */
-.techCard[style*="--hover-color: #ffffff"]:hover {
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3), 0 0 15px rgba(255, 255, 255, 0.15);
-}
-
-.techIconWrapper {
-  width: 50px;
-  height: 50px;
-  border-radius: 12px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  background-color: rgba(255, 255, 255, 0.02);
-  border: 1px solid var(--glass-border-dark);
-  color: var(--hover-color);
-  flex-shrink: 0;
-  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: clamp(18px, 2vw, 24px) clamp(20px, 2.2vw, 28px);
+  border-radius: var(--r-lg);
+  background: #ffffff;
+  border: 1px solid rgba(228, 228, 231, 0.8); /* zinc-200/80 */
+  box-shadow: var(--shadow-sm);
+  /* the wash is a child layer, so it can never bleed past the rounded corners */
+  overflow: hidden;
+  transition: border-color 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
 }
 
-.techCard:hover .techIconWrapper {
-  background-color: var(--hover-color);
-  color: var(--bg-navy);
-  border-color: transparent;
-  box-shadow: 0 0 12px var(--hover-color);
+/* hover wash on its own layer under the content — fading a background image on
+   the card itself repainted behind the text and made it flicker */
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(
+      100deg,
+      color-mix(in srgb, var(--brand) 8%, transparent),
+      transparent 55%
+    ),
+    rgba(250, 250, 250, 0.8); /* zinc-50/80 */
+  transition: opacity 0.3s ease;
 }
 
-.techSymbol {
-  font-size: 1.15rem;
-  font-weight: 700;
+/* the card borrows the mark's colour: tinted hairline and an ambient glow.
+   Raising z-index on hover keeps the scaled card above its neighbours instead
+   of being clipped by the next one in the grid. */
+.card:hover {
+  z-index: 1;
+  border-color: color-mix(in srgb, var(--brand) 45%, transparent);
+  box-shadow:
+    0 2px 6px rgba(24, 24, 27, 0.05),
+    0 0 0 4px color-mix(in srgb, var(--brand) 9%, transparent),
+    0 18px 40px -20px color-mix(in srgb, var(--brand) 65%, transparent);
 }
 
-.techInfo {
+.card:hover::before {
+  opacity: 1;
+}
+
+/* content rides above the wash layer so nothing shifts or dims on hover */
+.floater {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  will-change: transform;
+}
+
+.meta {
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
-.techName {
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  flex: none;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--brand) 8%, #fafafa);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand) 14%, transparent);
+  transition: background 0.4s ease, box-shadow 0.4s ease;
+}
+
+.card:hover .icon {
+  background: color-mix(in srgb, var(--brand) 14%, #ffffff);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand) 26%, transparent);
+}
+
+.name {
   font-family: var(--font-heading);
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--text-light);
-  margin-bottom: 4px;
+  /* H3: text-xl -> md:text-2xl, semibold, tracking-tight */
+  font-size: clamp(1.25rem, 1.6vw, 1.5rem);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  margin-bottom: 5px;
 }
 
-.techDesc {
-  font-size: 0.85rem;
-  color: var(--text-light-muted);
+.desc {
+  /* text-xs -> md:text-sm, zinc-500, leading-relaxed */
+  font-size: clamp(0.75rem, 0.9vw, 0.875rem);
+  line-height: 1.625;
+  color: var(--ink-2);
+  text-wrap: pretty;
 }
 
-@media (max-width: 1200px) {
-  .techGrid {
-    gap: 24px;
-  }
-}
-
-@media (max-width: 992px) {
-  .techGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .techSection {
-    padding: 90px 0;
-  }
-}
-
-@media (max-width: 576px) {
-  .techGrid {
+@media (max-width: 720px) {
+  .grid {
     grid-template-columns: 1fr;
-    max-width: 400px;
-    margin: 0 auto;
-  }
-
-  .techCard {
-    padding: 24px;
   }
 }

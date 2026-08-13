@@ -1,0 +1,248 @@
+/* One square stage. Everything inside is sized in `em` off a single
+   container-relative font-size, so the whole scene scales as one piece. */
+.stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  container-type: inline-size;
+  font-size: clamp(8px, 2.5cqw, 15px);
+  animation: hubIn 1.2s var(--ease-out) 300ms both;
+}
+
+@keyframes hubIn {
+  from { opacity: 0; scale: 0.96; }
+  to { opacity: 1; scale: 1; }
+}
+
+/* soft neutral bloom so the scene reads as lit, not pasted on */
+.wash {
+  position: absolute;
+  inset: 10%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(24, 24, 27, 0.05),
+    rgba(24, 24, 27, 0.02) 45%,
+    transparent 70%
+  );
+  filter: blur(26px);
+  pointer-events: none;
+}
+
+/* ---------- wiring ---------- */
+.wires {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* dotted rail — px widths regardless of the 0–100 viewBox scale */
+.line {
+  stroke: #a1a1aa; /* zinc-400 */
+  vector-effect: non-scaling-stroke;
+  stroke-width: 1.5px;
+  stroke-dasharray: 3 3;
+  transition: stroke 0.4s ease;
+}
+
+.lineOn {
+  stroke: #52525b; /* zinc-600 */
+}
+
+/* The travelling particle. No `non-scaling-stroke` here on purpose: that would
+   put the dash pattern in screen px and break the `pathLength={100}`
+   normalisation, so the dot would repeat instead of running the path once. */
+.packet {
+  stroke: #27272a; /* zinc-800 */
+  stroke-width: 0.9;
+  stroke-linecap: round;
+}
+
+/* ---------- cards ---------- */
+.card {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55em;
+  padding: 0.85em 0.95em;
+  border-radius: 1em;
+  /* `translate` (not `transform`) does the centring — framer-motion writes the
+     float to `transform`, and the two compose instead of overwriting */
+  translate: -50% -50%;
+  background: #ffffff;
+  border: 1px solid rgba(228, 228, 231, 0.8); /* zinc-200/80 */
+  box-shadow: 0 4px 10px rgba(24, 24, 27, 0.04), 0 24px 48px -20px rgba(24, 24, 27, 0.16);
+}
+
+.hub {
+  left: 50%;
+  top: 50%;
+  z-index: 3;
+  width: 42%;
+  align-items: center;
+  text-align: center;
+  gap: 0.45em;
+  padding: 1.1em 1em;
+}
+
+.hubMark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.2em;
+  height: 2.2em;
+  border-radius: 0.7em;
+  background: var(--surface-sunken);
+}
+
+.hubMark img {
+  width: 1.5em;
+  height: auto;
+  /* the mark carries its own colour — flattened to match the palette */
+  filter: grayscale(1) contrast(1.15);
+}
+
+.hubName {
+  font-family: var(--font-heading);
+  font-size: 1.05em;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  line-height: 1.25;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.3em 0.7em;
+  border-radius: 999px;
+  background: #f4f4f5; /* zinc-100 */
+  border: 1px solid #e4e4e7; /* zinc-200 */
+  font-size: 0.78em;
+  font-weight: 600;
+  color: #3f3f46; /* zinc-700 */
+}
+
+/* solid dot inside a tinted emerald aura, with a ring expanding out of it */
+.dotWrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 0.5em;
+  height: 0.5em;
+  flex: none;
+  /* the aura: emerald wash then a harder ring, both breathing */
+  box-shadow:
+    0 0 0 0.28em rgba(16, 185, 129, 0.2),
+    0 0 0 0.42em rgba(16, 185, 129, 0.4);
+  border-radius: 50%;
+  animation: auraPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes auraPulse {
+  0%, 100% {
+    box-shadow:
+      0 0 0 0.28em rgba(16, 185, 129, 0.2),
+      0 0 0 0.42em rgba(16, 185, 129, 0.4);
+  }
+  50% {
+    box-shadow:
+      0 0 0 0.34em rgba(16, 185, 129, 0.1),
+      0 0 0 0.5em rgba(16, 185, 129, 0.18);
+  }
+}
+
+/* the one live signal on the page — emerald reads as "running" at a glance */
+.dot {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #10b981; /* emerald-500 */
+}
+
+.ping {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #34d399; /* emerald-400 */
+  will-change: transform;
+}
+
+/* ---------- satellites ---------- */
+.node {
+  z-index: 2;
+  width: 40%;
+  will-change: transform;
+}
+
+.tl { left: 21%; top: 19%; }
+.tr { left: 79%; top: 19%; }
+.bl { left: 21%; top: 81%; }
+.br { left: 79%; top: 81%; }
+
+.nodeLabel {
+  font-size: 0.7em;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.spark {
+  width: 100%;
+  height: 1.8em;
+  color: #a1a1aa; /* zinc-400 — the polyline inherits it */
+}
+
+.metric {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+}
+
+.metricIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 1.9em;
+  height: 1.9em;
+  border-radius: 0.6em;
+  background: #f4f4f5; /* zinc-100 */
+  border: 1px solid #e4e4e7; /* zinc-200 */
+  color: #3f3f46; /* zinc-700 */
+}
+
+.metricText {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.2;
+}
+
+.metricText b {
+  font-family: var(--font-heading);
+  font-size: 1.05em;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.metricText em {
+  font-style: normal;
+  font-size: 0.72em;
+  font-weight: 500;
+  color: var(--ink-3);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage,
+  .dotWrap {
+    animation: none;
+  }
+}

@@ -3,6 +3,7 @@ import WhyChoose from '@/components/WhyChoose';
 import Process from '@/components/Process';
 import CTA from '@/components/CTA';
 import Footer from '@/components/Footer';
+import GridCanvas from '@/components/GridCanvas';
 import ScrollReveal from '@/components/ScrollReveal';
 import PoweredBy from '@/components/PoweredBy';
 
@@ -13,7 +14,8 @@ export default function AboutPage() {
       <Header />
       <main>
         {/* About Hero Header */}
-        <section style={{ paddingTop: '160px', paddingBottom: '80px', backgroundColor: 'var(--bg-navy)', borderBottom: '1px solid var(--glass-border-dark)' }}>
+        <section style={{ paddingTop: '160px', paddingBottom: '80px', backgroundColor: 'var(--bg-navy)', borderBottom: '1px solid var(--glass-border-dark)', position: 'relative', overflow: 'hidden' }}>
+          <GridCanvas />
           <div className="glow-effect" style={{ top: '-10%', left: '50%', transform: 'translateX(-50%)', width: '40vw', height: '40vw', backgroundColor: 'rgba(255, 255, 255, 0.03)', position: 'absolute', filter: 'blur(100px)', opacity: 0.25, borderRadius: '50%', pointerEvents: 'none' }}></div>
           <div className="container" style={{ textAlign: 'center', position: 'relative', zIndex: 10 }}>
             <div className="badge">About Us</div>

@@ -1,10 +1,13 @@
 import Image from 'next/image';
 import { ExternalLink, Layers, CreditCard, ShoppingCart, Briefcase } from 'lucide-react';
+import GridCanvas from './GridCanvas';
 import styles from './PoweredBy.module.css';
 
 export default function PoweredBy() {
   return (
     <section className={styles.poweredSection}>
+      <GridCanvas />
+
       <div className="container">
         {/* First Row: Details and Paragraph */}
         <div className={styles.sectionHeader}>
@@ -41,7 +44,7 @@ export default function PoweredBy() {
               />
             </div>
             <div className={styles.cardBody}>
-              <div className={styles.iconWrapper} style={{ color: '#38bdf8' }}>
+              <div className={styles.iconWrapper} style={{ color: '#3f3f46' }}>
                 <Layers size={20} />
               </div>
               <div className={styles.cardContent}>
@@ -62,7 +65,7 @@ export default function PoweredBy() {
               />
             </div>
             <div className={styles.cardBody}>
-              <div className={styles.iconWrapper} style={{ color: '#a855f7' }}>
+              <div className={styles.iconWrapper} style={{ color: '#3f3f46' }}>
                 <CreditCard size={20} />
               </div>
               <div className={styles.cardContent}>
@@ -83,7 +86,7 @@ export default function PoweredBy() {
               />
             </div>
             <div className={styles.cardBody}>
-              <div className={styles.iconWrapper} style={{ color: '#22c55e' }}>
+              <div className={styles.iconWrapper} style={{ color: '#3f3f46' }}>
                 <ShoppingCart size={20} />
               </div>
               <div className={styles.cardContent}>
@@ -104,7 +107,7 @@ export default function PoweredBy() {
               />
             </div>
             <div className={styles.cardBody}>
-              <div className={styles.iconWrapper} style={{ color: '#eab308' }}>
+              <div className={styles.iconWrapper} style={{ color: '#3f3f46' }}>
                 <Briefcase size={20} />
               </div>
               <div className={styles.cardContent}>

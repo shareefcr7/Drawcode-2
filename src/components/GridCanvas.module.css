@@ -1,0 +1,91 @@
+.canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: clip;
+  --mx: 50%;
+  --my: 40%;
+  --lit: 0;
+}
+
+/* 72px tracks, phase-locked horizontally with `50% 0` so the vertical lines
+   line up across every section that mounts this canvas */
+.grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(212, 212, 216, 0.42) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(212, 212, 216, 0.42) 1px, transparent 1px);
+  background-size: 72px 72px;
+  background-position: 50% 0;
+  /* edges melt into the white page instead of ending on a hard line */
+  mask-image: radial-gradient(ellipse at center, #000 70%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 70%, transparent 100%);
+}
+
+/* pointer light: a white core so the tracks brighten, ringed by a hair of
+   charcoal so the highlight still reads on a pure white section */
+.spot {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    500px circle at var(--mx) var(--my),
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(24, 24, 27, 0.05) 42%,
+    transparent 78%
+  );
+  opacity: var(--lit);
+  transition: opacity 0.45s ease;
+}
+
+/* ---------- scanning beams ----------
+   Every beam element covers the whole canvas; the glow is a fixed-size
+   background inside it. That way `y: 100% -> -100%` sweeps the full section
+   height while the glow stays 144px long. */
+.beam {
+  position: absolute;
+  inset: 0;
+  background-repeat: no-repeat;
+  will-change: transform;
+}
+
+/* horizontal: a 34%-wide segment riding a grid row */
+.h1,
+.h2 {
+  background-image: linear-gradient(
+    to right,
+    transparent,
+    rgba(161, 161, 170, 0.4),
+    transparent
+  );
+  background-size: 34% 1px;
+}
+
+.h1 { background-position: 0 22%; }
+.h2 { background-position: 0 66%; }
+
+/* vertical: a 144px glow on a grid column */
+.v1,
+.v2,
+.v3 {
+  background-image: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(161, 161, 170, 0.6),
+    transparent
+  );
+  background-size: 1px 9rem;
+}
+
+.v1 { background-position: 27% 0; }
+.v2 { background-position: 54% 0; }
+.v3 { background-position: 78% 0; }
+
+/* framer already skips the beam loops when reduced motion is set; the pointer
+   light is CSS, so it is switched off here */
+@media (prefers-reduced-motion: reduce) {
+  .spot {
+    display: none;
+  }
+}

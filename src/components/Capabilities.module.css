@@ -1,0 +1,325 @@
+/* Tall scroll track — the visible frame is the sticky viewport inside it.
+   Height comes from the scene count, set inline. */
+.section {
+  position: relative;
+  padding: 0;
+  background:
+    radial-gradient(60% 50% at 88% 8%, rgba(124, 58, 237, 0.05), transparent 70%),
+    radial-gradient(55% 45% at 6% 92%, rgba(37, 99, 235, 0.06), transparent 70%),
+    var(--surface-sunken);
+  border-bottom: 1px solid var(--line);
+}
+
+.viewport {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100svh;
+  overflow: hidden;
+}
+
+/* ---------- Fixed chrome ---------- */
+.chrome {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  padding-top: clamp(76px, 9vh, 110px);
+  padding-bottom: clamp(12px, 2vh, 24px);
+}
+
+.counter {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-family: var(--font-heading);
+  letter-spacing: -0.03em;
+}
+
+.counterNow {
+  font-size: clamp(1.5rem, 2.4vw, 2.1rem);
+  font-weight: 700;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.counterOf {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Filmstrip ---------- */
+.strip {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  will-change: transform;
+}
+
+.scene {
+  flex: 0 0 100%;
+  width: 100%;
+  min-width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+/* mockup on the LEFT, copy + tabs on the RIGHT */
+.sceneInner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.14fr) minmax(0, 0.86fr);
+  grid-template-areas: 'visual copy';
+  align-items: center;
+  gap: clamp(28px, 4.5vw, 76px);
+  width: 100%;
+}
+
+.copy {
+  grid-area: copy;
+}
+
+.visual {
+  grid-area: visual;
+}
+
+/* ---------- Copy ---------- */
+.copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.kicker i {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-line);
+  font-style: normal;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 3.4vw, 3rem);
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  margin-bottom: 16px;
+  text-wrap: balance;
+}
+
+.body {
+  font-size: clamp(0.96rem, 1.05vw, 1.06rem);
+  line-height: 1.7;
+  color: var(--ink-2);
+  max-width: 32em;
+  margin-bottom: 26px;
+  text-wrap: pretty;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.cta:hover {
+  color: var(--accent);
+}
+
+.arrow {
+  transition: transform 0.4s var(--ease-out);
+}
+
+.cta:hover .arrow {
+  transform: translateX(4px);
+}
+
+/* ---------- Scene visual ---------- */
+.visual {
+  position: relative;
+  width: 100%;
+  will-change: clip-path, transform, filter;
+}
+
+.frame {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: clamp(280px, 46vh, 430px);
+  padding: clamp(20px, 3vw, 42px);
+  border-radius: 22px;
+  border: 1px solid var(--line);
+  background:
+    radial-gradient(120% 100% at 50% 0%, var(--accent-soft), transparent 68%),
+    var(--surface);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+/* faint grid inside the frame */
+.frame::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, var(--line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+  background-size: 30px 30px;
+  opacity: 0.5;
+  mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, #000, transparent 78%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, #000, transparent 78%);
+}
+
+.frame > * {
+  position: relative;
+  z-index: 1;
+  scale: 1.22;
+}
+
+/* the growth dashboard is already dense — no upscaling */
+.frame > :global(.dash) {
+  scale: 1;
+}
+
+/* ---------- Progress ----------
+   Mirrors .sceneInner so the rail sits under the mockup and the topic tabs
+   sit under the copy, on the right. */
+.railWrap {
+  display: grid;
+  grid-template-columns: minmax(0, 1.14fr) minmax(0, 0.86fr);
+  align-items: center;
+  gap: clamp(28px, 4.5vw, 76px);
+  padding-bottom: clamp(24px, 5vh, 54px);
+}
+
+.rail {
+  height: 2px;
+  border-radius: 999px;
+  background: var(--line);
+  overflow: hidden;
+}
+
+.railFill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  transform-origin: left;
+}
+
+.dots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  list-style: none;
+}
+
+.dots li {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  transition: color 0.5s var(--ease-out), opacity 0.5s ease;
+  opacity: 0.7;
+}
+
+.dotOn {
+  color: var(--ink);
+  opacity: 1;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1024px) {
+  .sceneInner {
+    grid-template-columns: 1fr;
+    gap: clamp(20px, 3vh, 32px);
+    grid-template-areas:
+      'visual'
+      'copy';
+  }
+
+  .visual {
+    grid-area: visual;
+  }
+
+  .copy {
+    grid-area: copy;
+  }
+
+  .frame {
+    height: clamp(200px, 30vh, 280px);
+  }
+
+  .frame > * {
+    scale: 1;
+  }
+
+  .title {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    margin-bottom: 12px;
+  }
+
+  .body {
+    font-size: 0.95rem;
+    margin-bottom: 18px;
+  }
+
+  .dots {
+    display: none;
+  }
+
+  /* single column: rail spans the full width again */
+  .railWrap {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .chrome {
+    padding-top: clamp(70px, 11vh, 96px);
+  }
+
+  .body {
+    /* keep the scene inside one viewport on short phones */
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .visual {
+    filter: none !important;
+  }
+}

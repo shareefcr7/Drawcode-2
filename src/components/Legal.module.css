@@ -63,7 +63,7 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background-color: var(--accent, #3b82f6);
+  background-color: var(--accent, #3f3f46);
 }
 
 .list li strong {
@@ -76,7 +76,7 @@
 }
 
 .contactNote a {
-  color: var(--accent, #3b82f6);
+  color: var(--accent, #3f3f46);
   text-decoration: none;
 }
 

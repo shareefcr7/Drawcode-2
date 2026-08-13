@@ -21,30 +21,20 @@ export default function Home() {
         {/* Hero Section */}
         <Hero />
 
-        {/* Core Services Section */}
-        <div className="animate-on-scroll">
-          <Services />
-        </div>
+        {/* End-to-End Digital Services — staggered card grid */}
+        <Services />
 
         {/* EasyCom Section */}
-        <div className="animate-on-scroll">
-          <EasyCom />
-        </div>
+        <EasyCom />
 
-        {/* Technologies Grid */}
-        <div className="animate-on-scroll">
-          <Technologies />
-        </div>
+        {/* Technology — floating stack grid */}
+        <Technologies />
 
-        {/* Client Testimonials Section */}
-        <div className="animate-on-scroll">
-          <Testimonials />
-        </div>
+        {/* Testimonials */}
+        <Testimonials />
 
-        {/* Action Pitch Container */}
-        <div className="animate-on-scroll">
-          <CTA />
-        </div>
+        {/* CTA — glass banner */}
+        <CTA />
       </main>
 
       {/* Footer Navigation & Details */}
