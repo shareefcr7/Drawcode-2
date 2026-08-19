@@ -111,7 +111,7 @@ export default function CTA() {
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.5, ease: 'easeOut' }}
         >
-          <span className={styles.badge}>05 — We help it grow</span>
+          <span className={styles.badge}>06 — We help it grow</span>
 
           {/* ---------- architecture diagram ---------- */}
           <div className={styles.stage}>

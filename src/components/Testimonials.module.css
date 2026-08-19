@@ -28,10 +28,30 @@
   margin: 0 auto clamp(30px, 4vw, 54px);
 }
 
-/* ---------- three-card grid ---------- */
-.grid {
+/* ---------- pinboard ---------- */
+.board {
   position: relative;
   z-index: 2;
+}
+
+/* dashed arc threading the notes together. preserveAspectRatio="none" stretches
+   the path to the board, and non-scaling-stroke keeps the dashes even. */
+.thread {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  stroke: #d4d4d8; /* zinc-300 */
+  stroke-width: 1.5px;
+  stroke-dasharray: 6 6;
+  vector-effect: non-scaling-stroke;
+}
+
+.grid {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(16px, 2vw, 24px);
@@ -39,29 +59,92 @@
 }
 
 .card {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 32px;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(228, 228, 231, 0.8); /* zinc-200/80 */
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(228, 228, 231, 0.9); /* zinc-200/90 */
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  box-shadow: var(--shadow-sm);
-  /* framer owns the lift; CSS answers with border + shadow only */
-  transition: border-color 0.3s ease-out, box-shadow 0.3s ease-out;
+  box-shadow: 0 4px 10px rgba(24, 24, 27, 0.05);
+  /* Framer owns rotate + scale (spring drop, hover levelling). CSS must not
+     touch them or the two would stack into a double rotation. `translate` is a
+     separate property, so the pin offsets below still compose cleanly. */
+  transition: box-shadow 0.3s ease-out, border-color 0.3s ease-out;
 }
 
+/* vertical pin offsets — static, so they stay in CSS */
+.card:nth-child(1) { translate: 0 8px; }
+.card:nth-child(2) { translate: 0 -12px; }
+.card:nth-child(3) { translate: 0 4px; }
+
+/* the lift itself is framer's; CSS raises the stack and deepens the shadow */
 .card:hover {
-  border-color: #d4d4d8; /* zinc-300 — the shadow carries the emphasis */
-  box-shadow: 0 8px 16px rgba(24, 24, 27, 0.03), 0 32px 56px -24px rgba(24, 24, 27, 0.12);
+  z-index: 20;
+  border-color: #d4d4d8; /* zinc-300 */
+  box-shadow: 0 10px 20px rgba(24, 24, 27, 0.05), 0 34px 60px -22px rgba(24, 24, 27, 0.18);
+}
+
+/* ---------- washi tape ---------- */
+.tape {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  translate: -50% 0;
+  width: 52px;
+  height: 20px;
+  border-radius: 2px;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  box-shadow: 0 1px 3px rgba(24, 24, 27, 0.14);
+  pointer-events: none;
+  z-index: 20;
+}
+
+/* a soft fibre texture so the strip reads as tape, not a coloured rectangle */
+.tape::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    /* a hint of fibre, plus a soft sheen so it reads as translucent tape */
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.18) 0 1px,
+      transparent 1px 9px
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.35),
+      transparent 45%,
+      rgba(24, 24, 27, 0.06)
+    );
+}
+
+.card:nth-child(1) .tape {
+  background: rgba(34, 211, 238, 0.8);   /* cyan-400/80 */
+  border: 1px solid rgba(103, 232, 249, 0.5);
+}
+
+.card:nth-child(2) .tape {
+  background: rgba(163, 230, 53, 0.8);   /* lime-400/80 */
+  border: 1px solid rgba(190, 242, 100, 0.5);
+}
+
+.card:nth-child(3) .tape {
+  background: rgba(212, 212, 216, 0.85); /* zinc-300 */
+  border: 1px solid rgba(228, 228, 231, 0.6);
 }
 
 /* ---------- rating ---------- */
 .ratingRow {
   display: flex;
   gap: 4px;
+  margin-top: 4px;
   margin-bottom: 16px;
   color: #18181b; /* charcoal, never gold */
 }
@@ -123,9 +206,36 @@
 }
 
 .role {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 8px;
   font-size: 0.75rem;
   font-weight: 400;
   color: #a1a1aa; /* zinc-400 */
+}
+
+/* live indicator next to the location */
+.verified {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #52525b; /* zinc-600 */
+  font-weight: 500;
+}
+
+.verified i {
+  width: 8px;
+  height: 8px;
+  flex: none;
+  border-radius: 50%;
+  background: #10b981; /* emerald-500 */
+  animation: verifiedPulse 2s ease-in-out infinite;
+}
+
+@keyframes verifiedPulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.45); }
+  50% { opacity: 0.55; box-shadow: 0 0 0 4px rgba(16, 185, 129, 0); }
 }
 
 /* ---------- responsive ---------- */
@@ -140,7 +250,22 @@
     grid-template-columns: 1fr;
   }
 
+  /* stacked notes: drop the vertical offsets, framer keeps the small tilt */
+  .card:nth-child(1),
+  .card:nth-child(2),
+  .card:nth-child(3) { translate: 0; }
+
+  .thread {
+    display: none;
+  }
+
   .card {
     padding: 26px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .verified i {
+    animation: none;
   }
 }

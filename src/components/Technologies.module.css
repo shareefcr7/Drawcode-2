@@ -4,6 +4,7 @@
   border-bottom: 1px solid var(--line);
   position: relative;
   z-index: 10;
+  overflow: clip;
 }
 
 .sectionHeader {
@@ -21,74 +22,259 @@
   color: var(--ink-2);
 }
 
-/* ---------- Grid — 2 columns × 4 rows ---------- */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(14px, 1.6vw, 20px);
-  max-width: 880px;
-  margin: 0 auto;
-}
-
-.card {
-  /* per-card brand colour, written inline by the component */
-  --brand: #71717a;
-
+/* ---------- stage ----------
+   one 1000×620 user space shared by the SVG and the percentage-placed cards,
+   sized in `em` off a container-relative root so the whole diagram scales as
+   one piece rather than reflowing */
+.stage {
   position: relative;
-  display: flex;
-  align-items: center;
-  padding: clamp(18px, 2vw, 24px) clamp(20px, 2.2vw, 28px);
-  border-radius: var(--r-lg);
-  background: #ffffff;
-  border: 1px solid rgba(228, 228, 231, 0.8); /* zinc-200/80 */
-  box-shadow: var(--shadow-sm);
-  /* the wash is a child layer, so it can never bleed past the rounded corners */
-  overflow: hidden;
-  transition: border-color 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  aspect-ratio: 1000 / 620;
+  container-type: inline-size;
+  font-size: clamp(8px, 1.25cqw, 13px);
 }
 
-/* hover wash on its own layer under the content — fading a background image on
-   the card itself repainted behind the text and made it flicker */
-.card::before {
-  content: '';
+.wires {
   position: absolute;
   inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  opacity: 0;
-  background: linear-gradient(
-      100deg,
-      color-mix(in srgb, var(--brand) 8%, transparent),
-      transparent 55%
-    ),
-    rgba(250, 250, 250, 0.8); /* zinc-50/80 */
-  transition: opacity 0.3s ease;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
 }
 
-/* the card borrows the mark's colour: tinted hairline and an ambient glow.
-   Raising z-index on hover keeps the scaled card above its neighbours instead
-   of being clipped by the next one in the grid. */
-.card:hover {
-  z-index: 1;
-  border-color: color-mix(in srgb, var(--brand) 45%, transparent);
-  box-shadow:
-    0 2px 6px rgba(24, 24, 27, 0.05),
-    0 0 0 4px color-mix(in srgb, var(--brand) 9%, transparent),
-    0 18px 40px -20px color-mix(in srgb, var(--brand) 65%, transparent);
+/* px widths regardless of the viewBox scale */
+.line {
+  stroke: #e4e4e7; /* zinc-200 */
+  vector-effect: non-scaling-stroke;
+  stroke-width: 1.5px;
+  transition: stroke 0.35s ease;
 }
 
-.card:hover::before {
+.lineOn {
+  stroke: color-mix(in srgb, var(--brand) 35%, #e4e4e7);
+  stroke-width: 3px;
+}
+
+/* the travelling data pulse */
+.flow {
+  stroke: #a1a1aa; /* zinc-400 */
+  vector-effect: non-scaling-stroke;
+  stroke-width: 2px;
+  stroke-linecap: round;
+  opacity: 0.55;
+  transition: stroke 0.35s ease, opacity 0.35s ease, filter 0.35s ease;
+}
+
+.flowOn {
+  stroke: var(--brand);
+  stroke-width: 3px;
   opacity: 1;
+  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--brand) 60%, transparent));
 }
 
-/* content rides above the wash layer so nothing shifts or dims on hover */
-.floater {
+/* live data packet riding the curve */
+.packet {
+  fill: #38bdf8; /* sky-400 */
+  filter: drop-shadow(0 0 4px rgba(56, 189, 248, 0.7));
+}
+
+/* ---------- core ---------- */
+.core {
+  appearance: none;
+  font: inherit;
+  cursor: pointer;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.5em;
+  width: 26%;
+  padding: 1.4em 1.1em;
+  border-radius: 1.4em;
+  background: #ffffff;
+  border: 1px solid rgba(228, 228, 231, 0.9);
+  box-shadow:
+    0 0 0 0.7em rgba(244, 244, 245, 0.7),
+    0 6px 14px rgba(24, 24, 27, 0.05),
+    0 30px 60px -28px rgba(24, 24, 27, 0.22);
+}
+
+.core:hover {
+  border-color: rgba(56, 189, 248, 0.6);
+}
+
+.core:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+/* two rings breathing out from the core, offset so one is always mid-flight */
+.radar {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid rgba(56, 189, 248, 0.3); /* sky-400/30 */
+  pointer-events: none;
+  animation: radarPing 3s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.radarB {
+  animation-delay: 1.5s;
+}
+
+@keyframes radarPing {
+  0% { transform: scale(1); opacity: 0.8; }
+  80%, 100% { transform: scale(1.45); opacity: 0; }
+}
+
+.coreMark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.2em;
+  height: 3.2em;
+  border-radius: 1em;
+  background: #18181b;
+}
+
+.coreMark img {
+  width: 2em;
+  height: auto;
+  filter: brightness(0) invert(1);
+}
+
+.coreName {
+  font-family: var(--font-heading);
+  font-size: 1.05em;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.coreStatus {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  padding: 0.3em 0.75em;
+  border-radius: 999px;
+  background: #f4f4f5;
+  border: 1px solid #e4e4e7;
+  font-size: 0.75em;
+  font-weight: 600;
+  line-height: 1.4;
+  color: #3f3f46;
+  text-align: center;
+  /* the delivery list is too long for one line at this width — let it wrap
+     rather than clip, or the last offering disappears behind an ellipsis */
+  white-space: normal;
+  max-width: 100%;
+}
+
+.liveDot {
   position: relative;
-  z-index: 1;
+  display: inline-flex;
+  width: 0.55em;
+  height: 0.55em;
+  flex: none;
+  border-radius: 50%;
+  background: #10b981; /* emerald-500 */
+}
+
+/* the ring pings out of the solid dot */
+.liveDot i {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #34d399; /* emerald-400 */
+  opacity: 0.75;
+  animation: dotPing 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes dotPing {
+  0% { transform: scale(1); opacity: 0.75; }
+  80%, 100% { transform: scale(2.6); opacity: 0; }
+}
+
+/* ---------- technology nodes ---------- */
+.cell {
+  position: absolute;
+  translate: -50% -50%;
+  z-index: 2;
+  width: 26%;
+  /* the tilt needs a vanishing point to read as depth rather than a skew */
+  perspective: 900px;
+}
+
+/* the hovered node comes forward, over its neighbours */
+.cell:hover {
+  z-index: 4;
+}
+
+.left { left: 17%; }
+.right { left: 83%; }
+
+/* three rows a side now, so the nodes sit at 16% / 50% / 84% */
+.row0 { top: 16%; }
+.row1 { top: 50%; }
+.row2 { top: 84%; }
+
+.card {
+  transform-style: preserve-3d;
   display: flex;
   align-items: center;
-  gap: 16px;
-  will-change: transform;
+  gap: 0.9em;
+  padding: 1em 1.1em;
+  border-radius: 1.1em;
+  background: #ffffff;
+  border: 1px solid rgba(228, 228, 231, 0.8);
+  box-shadow: 0 2px 6px rgba(24, 24, 27, 0.04), 0 16px 30px -20px rgba(24, 24, 27, 0.18);
+  transition: opacity 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease,
+    translate 0.35s var(--ease-out);
+}
+
+/* everything that is not the hovered node steps back */
+.stage[data-hot] .cell[data-dim] .card {
+  opacity: 0.6;
+}
+
+/* focus mode: the active node picks up the same sky the data packets use */
+.cell:hover .card {
+  border-color: rgba(56, 189, 248, 0.6); /* sky-400/60 */
+  box-shadow:
+    0 2px 6px rgba(24, 24, 27, 0.05),
+    0 0 0 4px rgba(56, 189, 248, 0.08),
+    0 12px 26px -8px rgba(14, 165, 233, 0.1); /* sky-500/10 */
+}
+
+.icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 3.2em;
+  height: 3.2em;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--brand) 8%, #fafafa);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand) 14%, transparent);
+}
+
+/* outward pulse, alive only while the node is hovered */
+.ripple {
+  position: absolute;
+  inset: -0.25em;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--brand) 30%, transparent);
+  pointer-events: none;
 }
 
 .meta {
@@ -97,44 +283,322 @@
   min-width: 0;
 }
 
-.icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 50px;
-  height: 50px;
-  flex: none;
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--brand) 8%, #fafafa);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand) 14%, transparent);
-  transition: background 0.4s ease, box-shadow 0.4s ease;
-}
-
-.card:hover .icon {
-  background: color-mix(in srgb, var(--brand) 14%, #ffffff);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand) 26%, transparent);
+.group {
+  font-size: 0.7em;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 0.15em;
 }
 
 .name {
   font-family: var(--font-heading);
-  /* H3: text-xl -> md:text-2xl, semibold, tracking-tight */
-  font-size: clamp(1.25rem, 1.6vw, 1.5rem);
+  font-size: 1.15em;
   font-weight: 600;
   letter-spacing: -0.025em;
   color: var(--ink);
-  margin-bottom: 5px;
 }
 
 .desc {
-  /* text-xs -> md:text-sm, zinc-500, leading-relaxed */
-  font-size: clamp(0.75rem, 0.9vw, 0.875rem);
-  line-height: 1.625;
+  font-size: 0.8em;
+  line-height: 1.5;
   color: var(--ink-2);
   text-wrap: pretty;
 }
 
-@media (max-width: 720px) {
-  .grid {
+/* ---------- stacked layout ----------
+   below this width the diagram cannot be read, so the wiring drops out and the
+   nodes become an ordinary list with the core on top */
+@media (max-width: 860px) {
+  .stage {
+    aspect-ratio: auto;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    font-size: 11px;
+  }
+
+  .wires {
+    display: none;
+  }
+
+  .core {
+    position: static;
+    translate: none;
+    grid-column: 1 / -1;
+    width: auto;
+    max-width: 340px;
+    justify-self: center;
+    margin-bottom: 8px;
+    box-shadow: 0 6px 14px rgba(24, 24, 27, 0.05), 0 30px 60px -28px rgba(24, 24, 27, 0.18);
+  }
+
+  .cell {
+    position: static;
+    translate: none;
+    width: auto;
+  }
+}
+
+@media (max-width: 560px) {
+  .stage {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- click affordance on the node card ---------- */
+.card {
+  appearance: none;
+  width: 100%;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.card:active {
+  scale: 0.97;
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* ---------- detail dialog ---------- */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.modal {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 36rem;
+  padding: 32px;
+  border-radius: 24px;
+  background: #ffffff;
+  border: 1px solid #e4e4e7;
+  box-shadow: 0 12px 24px rgba(24, 24, 27, 0.08), 0 50px 90px -30px rgba(24, 24, 27, 0.4);
+  /* the section root sets a container font-size for the diagram; the dialog is
+     outside that scale, so it resets to page rem */
+  font-size: 1rem;
+}
+
+.modalHead {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.modalIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--brand) 10%, #fafafa);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand) 18%, transparent);
+}
+
+.modalMark {
+  width: 26px;
+  height: auto;
+}
+
+.modalTitles {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+.modalTitles .group {
+  font-size: 0.68rem;
+  margin-bottom: 2px;
+}
+
+.modalName {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+
+.close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #f4f4f5;
+  border: 1px solid #e4e4e7;
+  color: #3f3f46;
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.close:hover {
+  background: #18181b;
+  color: #ffffff;
+}
+
+.modalBlock {
+  margin-bottom: 20px;
+}
+
+.modalLabel {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 8px;
+}
+
+.modalText {
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+
+.projectName {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+/* client impact, as two stat blocks rather than a wall of prose */
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: #fafafa;
+  border: 1px solid #e4e4e7;
+}
+
+.metric b {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+
+.metric em {
+  font-style: normal;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: var(--ink-2);
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 24px;
+  border-radius: 999px;
+  background: #18181b;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 8px 20px -6px rgba(24, 24, 27, 0.28);
+  transition: background-color 0.25s ease, box-shadow 0.25s var(--ease-out);
+}
+
+.cta:hover {
+  background: #27272a;
+  box-shadow: 0 12px 26px -8px rgba(24, 24, 27, 0.38);
+}
+
+.cta svg {
+  transition: transform 0.25s var(--ease-out);
+}
+
+.cta:hover svg {
+  transform: translateX(4px);
+}
+
+.caps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.caps i {
+  font-style: normal;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--brand) 7%, #f4f4f5);
+  border: 1px solid color-mix(in srgb, var(--brand) 20%, #e4e4e7);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #3f3f46;
+}
+
+.integration {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(16, 185, 129, 0.09);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #047857;
+}
+
+.integration i {
+  width: 8px;
+  height: 8px;
+  flex: none;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.18);
+}
+
+@media (max-width: 560px) {
+  .modal {
+    padding: 24px;
+  }
+
+  .metrics {
     grid-template-columns: 1fr;
   }
 }

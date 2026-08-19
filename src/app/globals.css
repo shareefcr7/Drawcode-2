@@ -184,6 +184,9 @@ body > * {
 
 section {
   position: relative;
+  /* the header is fixed at ~68px — without this an in-page anchor drops the
+     section's eyebrow underneath the navbar links */
+  scroll-margin-top: 92px;
   padding: var(--section-y) 0;
   /* `clip` still hides the glow bleed, but keeps sticky children working */
   overflow: clip;

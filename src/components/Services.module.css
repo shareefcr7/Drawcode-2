@@ -1,5 +1,5 @@
 .section {
-  background-color: var(--bg-light);
+  background-color: #ffffff;
   padding: var(--section-y) 0;
   border-bottom: 1px solid var(--line);
   position: relative;
@@ -13,104 +13,321 @@
   margin: 0 auto clamp(30px, 4vw, 54px);
 }
 
-.grid {
+/* ---------- flow ---------- */
+.flow {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(14px, 1.6vw, 22px);
-  align-items: stretch;
+  grid-template-columns: minmax(0, 1fr) clamp(120px, 14vw, 200px) minmax(0, 1fr);
+  align-items: start;
+  gap: 0;
 }
 
-.card {
+.column {
   display: flex;
   flex-direction: column;
-  padding: 24px;
-  border-radius: 16px;
-  background: #ffffff;
-  border: 1px solid rgba(228, 228, 231, 0.8); /* zinc-200/80 */
-  box-shadow: var(--shadow-sm);
-  /* framer drives translate; CSS only handles the surface response to hover */
-  transition: border-color 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
+  gap: clamp(14px, 1.6vw, 22px);
 }
 
-/* soft charcoal lift — no colour wash, the shadow does the work */
+/* the right column starts lower, which is what makes the two sides read as a
+   staggered flow rather than two parallel lists */
+.columnRight {
+  padding-top: clamp(28px, 4vw, 58px);
+}
+
+/* ---------- card ---------- */
+.card {
+  --edge: #a1a1aa;
+
+  position: relative;
+  border-radius: 18px;
+  background: #ffffff;
+  border: 1px solid rgba(228, 228, 231, 0.9);
+  box-shadow: 0 1px 2px rgba(24, 24, 27, 0.04), 0 14px 28px -22px rgba(24, 24, 27, 0.22);
+  transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out),
+    border-color 0.3s ease;
+}
+
 .card:hover {
-  border-color: #a1a1aa; /* zinc-400 */
-  box-shadow: 0 2px 4px rgba(24, 24, 27, 0.04), 0 20px 40px -20px rgba(24, 24, 27, 0.2);
+  transform: translateY(-3px);
+  border-color: #d4d4d8;
+  box-shadow: 0 4px 10px rgba(24, 24, 27, 0.05), 0 24px 44px -22px rgba(24, 24, 27, 0.28);
+}
+
+/* the open card stays lifted and keeps its edge glow */
+.card[data-open] {
+  border-color: color-mix(in srgb, var(--edge) 45%, transparent);
+  box-shadow: 0 4px 10px rgba(24, 24, 27, 0.05),
+    0 24px 44px -22px color-mix(in srgb, var(--edge) 55%, transparent);
+}
+
+/* ---------- coloured edge ---------- */
+.edge {
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  width: 6px;
+  border-radius: 999px;
+  background: var(--edge);
+  transform-origin: center;
+  transition: box-shadow 0.3s ease, width 0.3s var(--ease-out);
+}
+
+.left .edge { left: -3px; }
+.right .edge { right: -3px; }
+
+.card:hover .edge,
+.card[data-open] .edge {
+  width: 8px;
+  box-shadow: 0 0 14px color-mix(in srgb, var(--edge) 70%, transparent);
+}
+
+/* ---------- head row ---------- */
+.head {
+  appearance: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  background: none;
+  border: 0;
+
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 1.4vw, 18px);
+  width: 100%;
+  padding: clamp(16px, 1.8vw, 22px) clamp(18px, 2vw, 26px);
+}
+
+.head:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 18px;
+}
+
+.num {
+  font-family: var(--font-heading);
+  font-size: clamp(1.6rem, 2.2vw, 2.1rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  flex: none;
 }
 
 .icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
-  margin-bottom: 20px;
+  flex: none;
+  width: 42px;
+  height: 42px;
   border-radius: 12px;
-  background: #f4f4f5; /* zinc-100 */
-  color: #18181b;      /* zinc-900 */
-  transition: background 0.3s ease, color 0.3s ease;
+  color: var(--ink);
+  border-left: 1px solid var(--line);
+  transition: transform 0.3s var(--ease-out);
 }
 
-/* the badge inverts on hover — the card's one moment of contrast */
 .card:hover .icon {
-  background: #18181b;
-  color: #ffffff;
+  transform: translateX(3px);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
 }
 
 .title {
   font-family: var(--font-heading);
-  /* H3: text-xl -> md:text-2xl, semibold, tracking-tight */
-  font-size: clamp(1.25rem, 1.6vw, 1.5rem);
+  font-size: clamp(0.98rem, 1.15vw, 1.1rem);
   font-weight: 600;
-  letter-spacing: -0.025em;
   line-height: 1.25;
+  letter-spacing: -0.02em;
   color: var(--ink);
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   text-wrap: balance;
 }
 
-.body {
-  /* text-xs -> md:text-sm, zinc-500, leading-relaxed */
-  font-size: clamp(0.75rem, 0.9vw, 0.875rem);
-  line-height: 1.625;
+.desc {
+  font-size: clamp(0.75rem, 0.9vw, 0.85rem);
+  line-height: 1.55;
   color: var(--ink-2);
   text-wrap: pretty;
 }
 
-/* pinned to the bottom so the row of links stays level across uneven cards */
-.explore {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: auto;
-  padding-top: 18px;
-  font-size: 0.82rem;
-  font-weight: 600;
+.chevron {
+  flex: none;
   color: var(--ink-3);
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.card:hover .explore {
-  color: var(--ink);
-}
-
-.arrow {
   transition: transform 0.3s var(--ease-out);
 }
 
-.card:hover .arrow {
-  transform: translateX(6px);
+.card[data-open] .chevron {
+  transform: rotate(180deg);
 }
 
-@media (max-width: 1080px) {
-  .grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+/* ---------- expanded detail ---------- */
+.detailWrap {
+  overflow: hidden;
+}
+
+.detail {
+  padding: 0 clamp(18px, 2vw, 26px);
+  font-size: clamp(0.75rem, 0.9vw, 0.85rem);
+  line-height: 1.65;
+  color: var(--ink-2);
+  border-top: 1px solid var(--line);
+  padding-top: 14px;
+  margin-top: 2px;
+}
+
+.detailLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 12px clamp(18px, 2vw, 26px) 18px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.detailLink svg {
+  transition: transform 0.3s var(--ease-out);
+}
+
+.detailLink:hover svg {
+  transform: translateX(4px);
+}
+
+/* ---------- connector dot ---------- */
+.dot {
+  position: absolute;
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  margin-top: -4.5px;
+  border-radius: 50%;
+  background: var(--edge);
+  box-shadow: 0 0 0 3px #ffffff;
+}
+
+.left .dot { right: -22px; }
+.right .dot { left: -22px; }
+
+/* ---------- centre rail ---------- */
+.rail {
+  position: relative;
+  align-self: stretch;
+  min-height: 100%;
+}
+
+.railLines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* the dashes drift slowly along the curve, so the flow reads as moving */
+.railPath {
+  stroke: #d4d4d8;
+  stroke-width: 1.5px;
+  stroke-dasharray: 5 7;
+  vector-effect: non-scaling-stroke;
+  animation: railDrift 24s linear infinite;
+}
+
+@keyframes railDrift {
+  to { stroke-dashoffset: -240; }
+}
+
+.hub {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  box-shadow: 0 4px 10px rgba(24, 24, 27, 0.05), 0 20px 40px -20px rgba(24, 24, 27, 0.25);
+}
+
+/* ---------- action ---------- */
+.actionRow {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(32px, 4vw, 52px);
+}
+
+.explore {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 15px 30px;
+  border-radius: 999px;
+  background: #18181b;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 8px 20px -6px rgba(24, 24, 27, 0.28);
+  transition: background-color 0.3s ease, box-shadow 0.3s var(--ease-out);
+}
+
+.explore:hover {
+  background: #27272a;
+  box-shadow: 0 12px 26px -8px rgba(24, 24, 27, 0.38);
+}
+
+.explore svg {
+  transition: transform 0.3s var(--ease-out);
+}
+
+.explore:hover svg {
+  transform: translateX(4px);
+}
+
+/* ---------- stacked ----------
+   below this width the rail has no room to read, so the flow becomes one
+   column and the cards keep only their coloured edge */
+@media (max-width: 900px) {
+  .flow {
+    grid-template-columns: 1fr;
+  }
+
+  .rail {
+    display: none;
+  }
+
+  .columnRight {
+    padding-top: clamp(14px, 1.6vw, 22px);
+  }
+
+  .right .edge {
+    right: auto;
+    left: -3px;
+  }
+
+  .dot {
+    display: none;
   }
 }
 
-@media (max-width: 560px) {
-  .grid {
-    grid-template-columns: 1fr;
+@media (prefers-reduced-motion: reduce) {
+  .railPath {
+    animation: none;
+  }
+
+  .card:hover {
+    transform: none;
+  }
+
+  .card:hover .icon {
+    transform: none;
   }
 }

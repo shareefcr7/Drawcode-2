@@ -1,0 +1,410 @@
+.section {
+  background-color: var(--bg-light);
+  padding: var(--section-y) 0;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+  z-index: 10;
+  overflow: clip;
+}
+
+.sectionHeader {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto clamp(28px, 4vw, 48px);
+}
+
+/* ---------- rows ---------- */
+.lanes {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(12px, 1.4vw, 18px);
+}
+
+.lane {
+  position: relative;
+}
+
+.viewport {
+  overflow: hidden;
+  /* cards fade in and out at the edges instead of being cut off */
+  mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+  /* room for the hover lift, so it is never clipped by the viewport */
+  padding: 10px 0;
+}
+
+.track {
+  display: flex;
+  align-items: stretch;
+  gap: clamp(12px, 1.1vw, 16px);
+  width: max-content;
+  animation: marquee 52s linear infinite;
+}
+
+/* the keyframe always travels one copy's width; only the direction flips */
+.toRight .track {
+  animation-direction: reverse;
+}
+
+.toLeft .track {
+  animation-duration: 62s;
+}
+
+/* hovering a row holds that row still — the others keep moving */
+.lane:hover .track,
+.lane:focus-within .track {
+  animation-play-state: paused;
+}
+
+/* a click, the toggle, or reduced-motion stops all of them */
+.lanes[data-frozen] .track,
+.lanes[data-frozen] .progressDot {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ---------- position indicator ---------- */
+.progress {
+  position: relative;
+  display: block;
+  height: 1px;
+  margin: 0 clamp(20px, 6vw, 90px);
+  background: linear-gradient(to right, transparent, #e4e4e7 12%, #e4e4e7 88%, transparent);
+}
+
+.progressDot {
+  position: absolute;
+  top: 50%;
+  width: 5px;
+  height: 5px;
+  margin-top: -2px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px rgba(24, 24, 27, 0.1);
+  animation: dotTravel 52s linear infinite;
+}
+
+.toRight .progressDot {
+  animation-direction: reverse;
+}
+
+.toLeft .progressDot {
+  animation-duration: 62s;
+}
+
+@keyframes dotTravel {
+  from { left: 100%; }
+  to { left: 0%; }
+}
+
+/* ---------- card ---------- */
+.card {
+  --brand: #71717a;
+
+  appearance: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  flex: none;
+  width: 214px;
+  padding: 13px 15px;
+  border-radius: 16px;
+  background: #ffffff;
+  border: 1px solid rgba(228, 228, 231, 0.9);
+  box-shadow: 0 1px 2px rgba(24, 24, 27, 0.04), 0 12px 24px -20px rgba(24, 24, 27, 0.2);
+  transition: transform 0.3s var(--ease-out), border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* a light indigo lift, with the technology's own colour in the glow */
+.card:hover,
+.card:focus-visible {
+  transform: translateY(-3px);
+  border-color: var(--line-strong);
+  box-shadow:
+    0 2px 6px rgba(24, 24, 27, 0.04),
+    0 0 0 4px rgba(24, 24, 27, 0.05),
+    0 18px 34px -18px color-mix(in srgb, var(--brand) 55%, transparent);
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--brand) 8%, #fafafa);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand) 12%, transparent);
+  transition: transform 0.3s var(--ease-out);
+}
+
+.card:hover .icon,
+.card:focus-visible .icon {
+  transform: scale(1.07);
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.name {
+  font-family: var(--font-heading);
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.desc {
+  font-size: 0.72rem;
+  line-height: 1.35;
+  color: var(--ink-2);
+}
+
+/* ---------- controls ---------- */
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: clamp(18px, 2.4vw, 30px);
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  background: #f4f4f5;
+  border: 1px solid #e4e4e7;
+  color: #3f3f46;
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+
+.toggle:hover {
+  background: #e4e4e7;
+}
+
+.hint {
+  font-size: 0.8rem;
+  color: var(--ink-3);
+}
+
+/* ---------- detail dialog ---------- */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(24, 24, 27, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.modal {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 44rem;
+  padding: 32px;
+  border-radius: 24px;
+  background: #ffffff;
+  border: 1px solid #e4e4e7;
+  box-shadow: 0 12px 24px rgba(24, 24, 27, 0.08), 0 50px 90px -30px rgba(24, 24, 27, 0.4);
+}
+
+.modalHead {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 22px;
+  margin-bottom: 22px;
+  border-bottom: 1px solid var(--line);
+}
+
+.modalIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 62px;
+  height: 62px;
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--brand) 10%, #fafafa);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand) 16%, transparent);
+}
+
+.modalTitles {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.modalName {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+
+.modalDesc {
+  font-size: 0.85rem;
+  color: var(--ink-2);
+}
+
+.close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #f4f4f5;
+  border: 1px solid #e4e4e7;
+  color: #3f3f46;
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.close:hover {
+  background: #18181b;
+  color: #ffffff;
+}
+
+/* two columns, as in the reference: reasoning on the left, tags on the right */
+.modalBody {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  margin-bottom: 24px;
+}
+
+.modalLabel {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 10px;
+}
+
+.modalText {
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+
+.caps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.caps i {
+  font-style: normal;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: #fafafa;
+  border: 1px solid #e4e4e7;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #3f3f46;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(16, 185, 129, 0.09);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #047857;
+}
+
+.status i {
+  width: 8px;
+  height: 8px;
+  flex: none;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.18);
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 1024px) {
+  .card {
+    width: 202px;
+  }
+}
+
+@media (max-width: 640px) {
+  .card {
+    width: 188px;
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .modal {
+    padding: 24px;
+  }
+
+  .modalBody {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track,
+  .progressDot {
+    animation: none;
+  }
+
+  .card:hover {
+    transform: none;
+  }
+
+  .card:hover .icon {
+    transform: none;
+  }
+}

@@ -1,3 +1,20 @@
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Projects',
+  description: "Explore Drawcode's portfolio: enterprise e-commerce builds, real-estate platforms, fleet management systems, and custom web architectures delivered for clients across India, Qatar and Australia.",
+  alternates: { canonical: '/projects' },
+  openGraph: {
+    title: 'Projects | Drawcode',
+    description: "Explore Drawcode's portfolio: enterprise e-commerce builds, real-estate platforms, fleet management systems, and custom web architectures delivered for clients across India, Qatar and Australia.",
+    url: '/projects',
+    type: 'website',
+    /* a child openGraph block replaces the parent's, so the shared card has to
+       be re-declared here or these pages share with no preview image */
+    images: ['/opengraph-image'],
+  },
+};
+
 import Header from '@/components/Header';
 import Projects from '@/components/Projects';
 import CTA from '@/components/CTA';

@@ -1,3 +1,20 @@
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Contact Us',
+  description: "Talk to Drawcode about your next build. Custom applications, websites, ERP & CRM platforms and business automation — based in Calicut, Kerala, delivering worldwide.",
+  alternates: { canonical: '/contact' },
+  openGraph: {
+    title: 'Contact Us | Drawcode',
+    description: "Talk to Drawcode about your next build. Custom applications, websites, ERP & CRM platforms and business automation — based in Calicut, Kerala, delivering worldwide.",
+    url: '/contact',
+    type: 'website',
+    /* a child openGraph block replaces the parent's, so the shared card has to
+       be re-declared here or these pages share with no preview image */
+    images: ['/opengraph-image'],
+  },
+};
+
 import Header from '@/components/Header';
 import ContactForm from '@/components/ContactForm';
 import Footer from '@/components/Footer';

@@ -40,6 +40,7 @@ export default function PoweredBy() {
                 alt="ERP Systems Mockup" 
                 width={500} 
                 height={320} 
+                sizes="(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 25vw"
                 className={styles.cardImage}
               />
             </div>
@@ -61,6 +62,7 @@ export default function PoweredBy() {
                 alt="Point of Sale (POS) Mockup" 
                 width={500} 
                 height={320} 
+                sizes="(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 25vw"
                 className={styles.cardImage}
               />
             </div>
@@ -82,6 +84,7 @@ export default function PoweredBy() {
                 alt="E-Commerce Mockup" 
                 width={500} 
                 height={320} 
+                sizes="(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 25vw"
                 className={styles.cardImage}
               />
             </div>
@@ -103,6 +106,7 @@ export default function PoweredBy() {
                 alt="Portfolios & Corporate Mockup" 
                 width={500} 
                 height={320} 
+                sizes="(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 25vw"
                 className={styles.cardImage}
               />
             </div>

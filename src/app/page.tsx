@@ -2,6 +2,7 @@ import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import Services from '@/components/Services';
 import EasyCom from '@/components/EasyCom';
+import TechMarquee from '@/components/TechMarquee';
 import Technologies from '@/components/Technologies';
 import Testimonials from '@/components/Testimonials';
 import CTA from '@/components/CTA';
@@ -27,8 +28,11 @@ export default function Home() {
         {/* EasyCom Section */}
         <EasyCom />
 
-        {/* Technology — floating stack grid */}
+        {/* What we deliver — the architecture diagram */}
         <Technologies />
+
+        {/* Tech stack — two opposing marquee lanes */}
+        <TechMarquee />
 
         {/* Testimonials */}
         <Testimonials />

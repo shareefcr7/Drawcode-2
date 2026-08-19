@@ -1,3 +1,20 @@
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'About Us',
+  description: "Drawcode is a technical consulting and software engineering firm backed by Shahi Solutions. We design tailored web, mobile, and cloud ecosystems built to scale.",
+  alternates: { canonical: '/about' },
+  openGraph: {
+    title: 'About Us | Drawcode',
+    description: "Drawcode is a technical consulting and software engineering firm backed by Shahi Solutions. We design tailored web, mobile, and cloud ecosystems built to scale.",
+    url: '/about',
+    type: 'website',
+    /* a child openGraph block replaces the parent's, so the shared card has to
+       be re-declared here or these pages share with no preview image */
+    images: ['/opengraph-image'],
+  },
+};
+
 import Header from '@/components/Header';
 import WhyChoose from '@/components/WhyChoose';
 import Process from '@/components/Process';
